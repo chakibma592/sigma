@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(	name = "users", 
 		uniqueConstraints = { 
@@ -37,6 +39,9 @@ public class User implements Serializable{
 	@NotBlank
 	@Size(max = 120)
 	private String password;
+	
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private Date birthday;
 	
 	@Value("${some.key:false}")
 	private boolean activate;
@@ -137,6 +142,14 @@ public class User implements Serializable{
 
 	public void setListsubscribe(List<Subscribe> listsubscribe) {
 		this.listsubscribe = listsubscribe;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
 	
 	
