@@ -29,7 +29,7 @@ public class Course implements Serializable {
 	@NotBlank
 	@Size(max = 200)
 	private String coursename;
-	@Size(max = 200)
+	@Size(max = 1000)
 	private String courseimageurl;
 	@NotBlank
 	@Size(max = 1000)
