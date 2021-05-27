@@ -1,29 +1,31 @@
 package com.optimgov.spring.elearning.controllers;
 
-import javax.validation.Valid;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.optimgov.spring.elearning.models.Lesson;
+import com.optimgov.spring.elearning.models.Course;
 import com.optimgov.spring.elearning.models.Subscribe;
+import com.optimgov.spring.elearning.models.User;
+import com.optimgov.spring.elearning.payload.request.SubscribeRequest;
 import com.optimgov.spring.elearning.repository.CourseRepository;
 import com.optimgov.spring.elearning.repository.SubscribeRepository;
 import com.optimgov.spring.elearning.repository.UserRepository;
+
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -32,62 +34,60 @@ public class SubscribeController {
 	@Autowired
     private SubscribeRepository subscribeRepository;
 	@Autowired
-    private CourseRepository courseRepository;
-	@Autowired
     private UserRepository userRepository;
-	@GetMapping("/list")
-	@PreAuthorize("hasRole('USER') OR hasRole('TEACHER') OR hasRole('ADMIN')")
-	public ModelMap subscribe(Pageable pageable, @RequestParam(name = "value", required = false) String value,
-			Model model) {
-   
-		return new ModelMap().addAttribute("subscribe", subscribeRepository.findAll(pageable));
+	@Autowired
+    private CourseRepository courseRepository;
+	@GetMapping("/list/{id}")
+	public ResponseEntity<ArrayList<Subscribe>> getCourseBySubscriber(@PathVariable("id") String id) {
+		try {
+			ArrayList<Subscribe> subscribers = new ArrayList<Subscribe>();
 
-    }
+			if (id == null)
+				subscribeRepository.findAll().forEach(subscribers::add);
+			else
+				subscribeRepository.findByCourseBySubscriberId(Long.parseLong(id)).forEach(subscribers::add);
+			if (subscribers.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
 
-	@GetMapping("/form")
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('TEACHER')")
-    public String showForm(@RequestParam(value = "id", required = false) Subscribe subscribe, Model m ) {
-        if (subscribe == null) {
-        	subscribe= new Subscribe();
-        }
-        m.addAttribute("subscribe", subscribe);
-        m.addAttribute("course", courseRepository.findAll());
-        m.addAttribute("user", userRepository.findAll());
-        
-        return "/form";
-    }
-
+			return new ResponseEntity<>(subscribers, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	@PostMapping("/form")
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('TEACHER')")
-	public String save(@Valid @ModelAttribute("subscribe") Subscribe subscribe, BindingResult errors, SessionStatus status) {
-        if (errors.hasErrors()) {
-			return "/form";
-        }
-        subscribeRepository.save(subscribe);
-        status.setComplete();
-		return "redirect:/list";
-    }
+	public ResponseEntity<Subscribe> createTutorial(@RequestBody SubscribeRequest subscribe) {
+		try {
+			Course course= courseRepository.findByCourseId(subscribe.getCourseid());
+			Optional<User> optionnaluser= userRepository.findById(subscribe.getUserid());
+			User user=optionnaluser.get();
+			Subscribe subscriber = subscribeRepository
+					.save(new Subscribe(false,subscribe.getSubscribingDate(),course,user));
+			return new ResponseEntity<>(subscriber, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	@PutMapping("/paid/{id}")
+	public ResponseEntity<Subscribe> paidSubscribe(@PathVariable("id") long id) {
+		Optional<Subscribe> subscribeData = subscribeRepository.findById(id);
 
-	@GetMapping("/delete")
-	@PreAuthorize("hasRole('ADMIN') OR hasRole('TEACHER')")
-    public ModelMap deleteConfirm(@RequestParam(value = "id", required = true) Subscribe subscribe ) {
-		return new ModelMap("subscribe", subscribe);
-    }
+		if (subscribeData.isPresent()) {
+			Subscribe subscriber = subscribeData.get();
+			subscriber .setPayed(true);
+			return new ResponseEntity<>(subscribeRepository.save(subscriber), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<HttpStatus> deleteSubscribe(@PathVariable("id") long id) {
+		try {
+			subscribeRepository.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
-	@PostMapping("/delete")
-	@PreAuthorize("hasRole('ADMIN')OR hasRole('TEACHER')")
-    public Object delete(@ModelAttribute Subscribe subscribe, SessionStatus status) {
-        try{
-        	subscribeRepository.delete(subscribe);
-        } catch (DataIntegrityViolationException exception) {
-            status.setComplete();
-            return new ModelAndView("error/errorHapus")
-					.addObject("entityId", subscribe.getId())
-					.addObject("entityName", "subscribe")
-                    .addObject("errorCause", exception.getRootCause().getMessage())
-					.addObject("backLink", "/list");
-        }
-        status.setComplete();
-		return "redirect:/list";
-    }
 }

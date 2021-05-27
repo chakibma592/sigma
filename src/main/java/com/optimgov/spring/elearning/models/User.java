@@ -45,7 +45,6 @@ public class User implements Serializable{
 	
 	@Value("${some.key:false}")
 	private boolean activate;
-	
 	@Column(name="created_at", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private Date created_at;
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -53,8 +52,7 @@ public class User implements Serializable{
 				joinColumns = @JoinColumn(name = "user_id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
-	@OneToMany(targetEntity = Subscribe.class, mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	private List<Subscribe> listsubscribe= new ArrayList<>();
+	
 	public User() {
 	}
 
@@ -136,13 +134,7 @@ public class User implements Serializable{
 		this.created_at = created_at;
 	}
 
-	public List<Subscribe> getListsubscribe() {
-		return listsubscribe;
-	}
-
-	public void setListsubscribe(List<Subscribe> listsubscribe) {
-		this.listsubscribe = listsubscribe;
-	}
+	
 
 	public Date getBirthday() {
 		return birthday;

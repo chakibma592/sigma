@@ -47,9 +47,6 @@ public class Course implements Serializable {
 		@JoinColumn(name = "topicid", nullable = false)
 		@OnDelete(action = OnDeleteAction.CASCADE)
 	    private Topic topic;
-	 
-		@OneToMany(targetEntity = Subscribe.class, mappedBy = "course", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-		private List<Subscribe> listsubscribes= new ArrayList<>();
 	
 	public Course(@NotBlank @Size(max = 200) String coursename, @NotBlank @Size(max = 1000) String description,
 			@NotBlank double price, @NotBlank double rate, Date created_at, boolean locked, Topic topic) {
@@ -120,12 +117,6 @@ public class Course implements Serializable {
 	public void setCourseimageurl(String courseimageurl) {
 		this.courseimageurl = courseimageurl;
 	}
-	public List<Subscribe> getListsubscribes() {
-		return listsubscribes;
-	}
-	public void setListsubscribes(List<Subscribe> listsubscribes) {
-		this.listsubscribes = listsubscribes;
-	}
-	
+
 
 }

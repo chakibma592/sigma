@@ -19,17 +19,17 @@ import org.springframework.beans.factory.annotation.Value;
 @Entity
 public class Subscribe implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Value("${some.key:false}")
 	private boolean payed;
 	@Column(name="subscribing_date", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private Date subscribingDate;
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "userid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private User user;
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "courseid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Course course;
@@ -41,6 +41,14 @@ public class Subscribe implements Serializable {
 	}
 	public Subscribe() {
 		super();
+	}
+	
+	public Subscribe(boolean payed, Date subscribingDate, Course course, User user) {
+		super();
+		this.payed = payed;
+		this.subscribingDate = subscribingDate;
+		this.user = user;
+		this.course = course;
 	}
 	public Long getId() {
 		return id;
