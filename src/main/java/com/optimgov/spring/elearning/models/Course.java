@@ -59,6 +59,21 @@ public class Course implements Serializable {
 		this.locked = locked;
 		this.topic = topic;
 	}
+	
+	public Course(@NotBlank @Size(max = 200) String coursename, @Size(max = 1000) String courseimageurl,
+			@NotBlank @Size(max = 1000) String description, @NotBlank double price, @NotBlank double rate,
+			Date created_at, boolean locked, Topic topic) {
+		super();
+		this.coursename = coursename;
+		this.courseimageurl = courseimageurl;
+		this.description = description;
+		this.price = price;
+		this.rate = rate;
+		this.created_at = created_at;
+		this.locked = locked;
+		this.topic = topic;
+	}
+
 	public Course() {
 		super();
 	}

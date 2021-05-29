@@ -12,6 +12,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -52,7 +54,14 @@ public class User implements Serializable{
 				joinColumns = @JoinColumn(name = "user_id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
-	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "professionid", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+    private Profession professon;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "studieslevelid", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+    private StudiesLevel studieslevel;
 	public User() {
 	}
 
@@ -142,6 +151,22 @@ public class User implements Serializable{
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+
+	public Profession getProfesson() {
+		return professon;
+	}
+
+	public void setProfesson(Profession professon) {
+		this.professon = professon;
+	}
+
+	public StudiesLevel getStudiesLevel() {
+		return studieslevel;
+	}
+
+	public void setStudiesLevel(StudiesLevel studiesLevel) {
+		this.studieslevel = studiesLevel;
 	}
 	
 	
