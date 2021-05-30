@@ -18,6 +18,12 @@ public class StudiesLevel {
 	public StudiesLevel() {
 		super();
 	}
+	
+	public StudiesLevel(@NotBlank @Size(max = 200) String levelname) {
+		super();
+		this.levelname = levelname;
+	}
+
 	public Long getId() {
 		return id;
 	}
