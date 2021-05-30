@@ -39,12 +39,14 @@ public class Lesson implements Serializable{
             cascade =  CascadeType.ALL,
             mappedBy = "lesson")
     private Quiz quiz;
+	
 	public Lesson(@NotBlank @Size(max = 200) String lessonname, @NotBlank @Size(max = 1000) String description,
-			@NotBlank @Size(max = 1000) String videourl) {
+			@NotBlank @Size(max = 1000) String videourl, Course course) {
 		super();
 		this.lessonname = lessonname;
 		this.description = description;
 		this.videourl = videourl;
+		this.course = course;
 	}
 	public Long getId() {
 		return id;

@@ -1,4 +1,4 @@
-package com.bezkoder.spring.security.postgresql;
+package com.optimgov.spring.security.postgresql;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

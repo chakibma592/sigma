@@ -21,6 +21,12 @@ public class Profession implements Serializable{
 	public Profession() {
 		super();
 	}
+	
+	public Profession(@NotBlank @Size(max = 200) String professionname) {
+		super();
+		this.professionname = professionname;
+	}
+
 	public Profession(Long id, @NotBlank @Size(max = 200) String professionname) {
 		super();
 		this.id = id;

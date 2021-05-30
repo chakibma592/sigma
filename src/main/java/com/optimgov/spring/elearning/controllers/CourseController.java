@@ -55,7 +55,7 @@ public class CourseController {
 		}
 	}
 	@PostMapping("/form")
-	public ResponseEntity<Course> createTutorial(@RequestBody CourseRequest courserequest) {
+	public ResponseEntity<Course>createCourse(@RequestBody CourseRequest courserequest) {
 		try {
 			
 			Optional<Topic> optionnaltopic= topicRepository.findById(courserequest.getTopicid());
