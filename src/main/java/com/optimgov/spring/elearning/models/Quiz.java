@@ -26,8 +26,6 @@ public class Quiz implements Serializable{
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "lessonid", nullable = false)
     private Lesson lesson;
-	@OneToMany(targetEntity = Question.class, mappedBy = "quiz", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	private List<Question> listquestions= new ArrayList<>();
 	public Quiz(@NotBlank @Size(max = 200) String quiztitle, Lesson lesson) {
 		super();
 		this.quiztitle = quiztitle;
@@ -54,11 +52,6 @@ public class Quiz implements Serializable{
 	public void setLesson(Lesson lesson) {
 		this.lesson = lesson;
 	}
-	public List<Question> getListquestions() {
-		return listquestions;
-	}
-	public void setListquestions(List<Question> listquestions) {
-		this.listquestions = listquestions;
-	}
+	
 	
 }

@@ -31,8 +31,6 @@ public class Question implements Serializable{
 	@JoinColumn(name = "quizid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
     private Quiz quiz;
-	@OneToMany(targetEntity = Answer.class, mappedBy = "question", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-	private List<Answer> listanswers= new ArrayList<>();
 	public Question(@NotBlank @Size(max = 200) String quetionlib, Quiz quiz) {
 		super();
 		this.quetionlib = quetionlib;
@@ -59,11 +57,6 @@ public class Question implements Serializable{
 	public void setQuiz(Quiz quiz) {
 		this.quiz = quiz;
 	}
-	public List<Answer> getListanswers() {
-		return listanswers;
-	}
-	public void setListanswers(List<Answer> listanswers) {
-		this.listanswers = listanswers;
-	}
+	
 	
 }
