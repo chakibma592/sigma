@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Entity
 public class Course implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@NotBlank
 	@Size(max = 200)
@@ -70,6 +70,17 @@ public class Course implements Serializable {
 		this.price = price;
 		this.rate = rate;
 		this.created_at = created_at;
+		this.locked = locked;
+		this.topic = topic;
+	}
+	public Course(@NotBlank @Size(max = 200) String coursename, @Size(max = 1000) String courseimageurl,
+			@NotBlank @Size(max = 1000) String description, @NotBlank double price, @NotBlank double rate, boolean locked, Topic topic) {
+		super();
+		this.coursename = coursename;
+		this.courseimageurl = courseimageurl;
+		this.description = description;
+		this.price = price;
+		this.rate = rate;
 		this.locked = locked;
 		this.topic = topic;
 	}

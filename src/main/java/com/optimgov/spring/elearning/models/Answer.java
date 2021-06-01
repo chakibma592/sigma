@@ -18,7 +18,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 public class Answer implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@NotBlank
 	@Size(max = 200)

@@ -18,6 +18,10 @@ import org.springframework.beans.factory.annotation.Value;
 
 @Entity
 public class Subscribe implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -47,6 +51,12 @@ public class Subscribe implements Serializable {
 		super();
 		this.payed = payed;
 		this.subscribingDate = subscribingDate;
+		this.user = user;
+		this.course = course;
+	}
+	public Subscribe(boolean payed,Course course, User user) {
+		super();
+		this.payed = payed;
 		this.user = user;
 		this.course = course;
 	}

@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class Quiz implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@NotBlank
 	@Size(max = 200)

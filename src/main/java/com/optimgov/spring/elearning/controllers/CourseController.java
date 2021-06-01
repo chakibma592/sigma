@@ -62,7 +62,7 @@ public class CourseController {
 			Topic topic=optionnaltopic.get();
 			Course course = courseRepository
 					.save(new Course(courserequest.getCoursename(),courserequest.getCourseimageurl(), courserequest.getDescription(),
-							courserequest.getPrice(), courserequest.getRate(), courserequest.getCreated_at(), false, topic));
+							courserequest.getPrice(), courserequest.getRate(),true, topic));
 			return new ResponseEntity<>(course, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

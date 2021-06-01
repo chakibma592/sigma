@@ -60,7 +60,7 @@ public class SubscribeController {
 			Optional<User> optionnaluser= userRepository.findById(subscribe.getUserid());
 			User user=optionnaluser.get();
 			Subscribe subscriber = subscribeRepository
-					.save(new Subscribe(false,subscribe.getSubscribingDate(),course,user));
+					.save(new Subscribe(false,course,user));
 			return new ResponseEntity<>(subscriber, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
