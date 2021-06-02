@@ -43,7 +43,7 @@ public class ProfilController {
 		    user.setFirstname(profilrequest.getFirstname());
 		    user.setLastname(profilrequest.getLastname());
 		    user.setEmail(profilrequest.getEmail());
-		    
+		    user.setBirthday(profilrequest.getBirthday());
 			Optional<Profession> optionnalprofession= professionRepository.findById(profilrequest.getProfessionid());
 			if(optionnalprofession.isPresent()) {
 			Profession profession=optionnalprofession.get();

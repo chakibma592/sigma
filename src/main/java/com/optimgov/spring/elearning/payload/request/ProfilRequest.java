@@ -1,6 +1,5 @@
 package com.optimgov.spring.elearning.payload.request;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
@@ -12,7 +11,7 @@ public class ProfilRequest {
 	@NotBlank
 	private String lastname;
 	@NotBlank
-	private LocalDate birthday;
+	private Date birthday;
 	@NotBlank
 	private String email;
 	private Long professionid;
@@ -29,10 +28,10 @@ public class ProfilRequest {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-	public LocalDate getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(LocalDate birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 	public String getEmail() {

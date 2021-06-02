@@ -1,7 +1,6 @@
 package com.optimgov.spring.elearning.models;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -56,7 +55,7 @@ public class User implements Serializable{
 	private boolean activate;
 	@Column(name="created_at")
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private LocalDate created_at;
+	private Date created_at;
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
 				joinColumns = @JoinColumn(name = "user_id"), 
@@ -83,7 +82,7 @@ public class User implements Serializable{
 	
 
 	public User(Long id, @NotBlank @Size(max = 20) String username, @NotBlank @Size(max = 50) @Email String email,
-			@NotBlank @Size(max = 120) String password, @NotBlank boolean activate, @NotBlank LocalDate created_at,
+			@NotBlank @Size(max = 120) String password, @NotBlank boolean activate, @NotBlank Date created_at,
 			Set<Role> roles) {
 		super();
 		this.id = id;
@@ -143,11 +142,11 @@ public class User implements Serializable{
 		this.activate = activate;
 	}
 
-	public LocalDate getCreated_at() {
+	public Date getCreated_at() {
 		return created_at;
 	}
 
-	public void setCreated_at(LocalDate created_at) {
+	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
 
