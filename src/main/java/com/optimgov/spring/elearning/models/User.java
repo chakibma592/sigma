@@ -69,6 +69,10 @@ public class User implements Serializable{
 	@JoinColumn(name = "studieslevelid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
     private StudiesLevel studieslevel;
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "fileid", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+    private UploadedFile fileid;
 	public User() {
 	}
 
@@ -93,6 +97,7 @@ public class User implements Serializable{
 		this.created_at = created_at;
 		this.roles = roles;
 	}
+	
 
 	public Long getId() {
 		return id;
@@ -194,6 +199,14 @@ public class User implements Serializable{
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+
+	public UploadedFile getFileid() {
+		return fileid;
+	}
+
+	public void setFileid(UploadedFile fileid) {
+		this.fileid = fileid;
 	}
 
 
