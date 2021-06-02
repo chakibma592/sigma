@@ -54,7 +54,7 @@ public class SubscribeController {
 		}
 	}
 	@PostMapping("/form")
-	public ResponseEntity<Subscribe> createTutorial(@RequestBody SubscribeRequest subscribe) {
+	public ResponseEntity<Subscribe> createCart(@RequestBody SubscribeRequest subscribe) {
 		try {
 			Course course= courseRepository.findByCourseId(subscribe.getCourseid());
 			Optional<User> optionnaluser= userRepository.findById(subscribe.getUserid());

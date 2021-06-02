@@ -2,31 +2,27 @@ package com.optimgov.spring.elearning.payload.request;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Value;
 
 public class CourseRequest {
-	private Long id;
+	@NotBlank
 	private String coursename;
+	@NotBlank
 	private String courseimageurl;
+	@NotBlank
 	private String description;
+	
 	private double price;
+	
 	private double rate;
+	@NotBlank
 	private Date created_at;
+	@NotBlank
 	private boolean locked;
+	
 	private Long topicid;
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 	public String getCoursename() {
 		return coursename;
 	}

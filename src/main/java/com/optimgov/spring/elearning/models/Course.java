@@ -34,9 +34,9 @@ public class Course implements Serializable {
 	@NotBlank
 	@Size(max = 1000)
 	private String description;
-	@NotBlank
+	
 	private double price;
-	@NotBlank
+
 	@Value("${some.key:0}")
 	private double rate;
 	@Column(name="created_at", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

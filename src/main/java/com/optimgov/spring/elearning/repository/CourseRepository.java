@@ -14,5 +14,6 @@ public interface CourseRepository  extends JpaRepository<Course, Long>{
 	ArrayList<Course> findByTopic(@Param(value="identity")Long id);
 	@Query("SELECT c FROM Course c where c.id = :identity")
 	Course findByCourseId(@Param(value="identity")Long id);
+	
 
 }
