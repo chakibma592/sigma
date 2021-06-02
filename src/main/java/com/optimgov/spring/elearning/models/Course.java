@@ -33,10 +33,8 @@ public class Course implements Serializable {
 	private String courseimageurl;
 	@NotBlank
 	@Size(max = 1000)
-	private String description;
-	
+	private String description;	
 	private double price;
-
 	@Value("${some.key:0}")
 	private double rate;
 	@Column(name="created_at", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
