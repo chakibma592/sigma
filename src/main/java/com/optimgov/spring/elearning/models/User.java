@@ -32,10 +32,10 @@ public class User implements Serializable{
 	@NotBlank
 	@Size(max = 20)
 	private String username;
-	@NotBlank
+	
 	@Size(max = 20)
 	private String firstname;
-	@NotBlank
+	
 	@Size(max = 20)
 	private String lastname;
 
@@ -72,7 +72,7 @@ public class User implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "fileid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-    private UploadedFile fileid;
+    private UploadedFile file;
 	public User() {
 	}
 
@@ -202,11 +202,11 @@ public class User implements Serializable{
 	}
 
 	public UploadedFile getFileid() {
-		return fileid;
+		return file;
 	}
 
-	public void setFileid(UploadedFile fileid) {
-		this.fileid = fileid;
+	public void setFileid(UploadedFile file) {
+		this.file = file;
 	}
 
 

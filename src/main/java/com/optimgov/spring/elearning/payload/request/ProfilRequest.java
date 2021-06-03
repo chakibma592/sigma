@@ -2,20 +2,19 @@ package com.optimgov.spring.elearning.payload.request;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotBlank;
-
 public class ProfilRequest {
-	@NotBlank
+	
 	private String firstname;
 
-	@NotBlank
+	
 	private String lastname;
-	@NotBlank
+	
 	private Date birthday;
-	@NotBlank
+	
 	private String email;
 	private Long professionid;
 	private long levelid;
+	private long fileid;
 	public String getFirstname() {
 		return firstname;
 	}
@@ -51,6 +50,12 @@ public class ProfilRequest {
 	}
 	public void setLevelid(long levelid) {
 		this.levelid = levelid;
+	}
+	public long getFileid() {
+		return fileid;
+	}
+	public void setFileid(long fileid) {
+		this.fileid = fileid;
 	}
 	
 	
