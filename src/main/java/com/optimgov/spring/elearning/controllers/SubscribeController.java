@@ -1,6 +1,7 @@
 package com.optimgov.spring.elearning.controllers;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.optimgov.spring.elearning.models.Course;
 import com.optimgov.spring.elearning.models.Subscribe;
 import com.optimgov.spring.elearning.models.User;
 import com.optimgov.spring.elearning.payload.request.SubscribeRequest;
+import com.optimgov.spring.elearning.payload.response.CartResponse;
 import com.optimgov.spring.elearning.repository.CourseRepository;
 import com.optimgov.spring.elearning.repository.SubscribeRepository;
 import com.optimgov.spring.elearning.repository.UserRepository;
@@ -35,20 +37,46 @@ public class SubscribeController {
     private UserRepository userRepository;
 	@Autowired
     private CourseRepository courseRepository;
-	@GetMapping("/list/{id}")
-	public ResponseEntity<ArrayList<Subscribe>> getCourseBySubscriber(@PathVariable("id") String id) {
+	@GetMapping("/cartlist/{id}")
+	public ResponseEntity<ArrayList<CartResponse>> getCourseBySubscriber(@PathVariable("id") Long id) {
 		try {
 			ArrayList<Subscribe> subscribers = new ArrayList<Subscribe>();
+			ArrayList<CartResponse> cart= new ArrayList<CartResponse>();
 
-			if (id == null)
-				subscribeRepository.findAll().forEach(subscribers::add);
-			else
-				subscribeRepository.findByCourseBySubscriberId(Long.parseLong(id)).forEach(subscribers::add);
-			if (subscribers.isEmpty()) {
+			subscribeRepository.findByCourseBySubscriberId(id).forEach(subscribers::add);
+			Iterator it= subscribers.iterator();
+			while(it.hasNext()) {
+				Subscribe s= (Subscribe) it.next();
+				if(!s.isPayed())
+				cart.add(new CartResponse(s.getCourse().getCoursename(),s.getCourse().getCourseimageurl(),s.getCourse().getDescription(),s.getCourse().getPrice(),s.getCourse().getRate(),s.getCourse().getCreated_at(),s.getCourse().isLocked(),s.getCourse().getTopic().getTopicname(),s.getId(),s.getCourse().getId()));
+			}
+			if (cart.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 
-			return new ResponseEntity<>(subscribers, HttpStatus.OK);
+			return new ResponseEntity<>(cart, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	@GetMapping("/mylist/{id}")
+	public ResponseEntity<ArrayList<CartResponse>> getMList(@PathVariable("id") Long id) {
+		try {
+			ArrayList<Subscribe> subscribers = new ArrayList<Subscribe>();
+			ArrayList<CartResponse> cart= new ArrayList<CartResponse>();
+
+			subscribeRepository.findByCourseBySubscriberId(id).forEach(subscribers::add);
+			Iterator it= subscribers.iterator();
+			while(it.hasNext()) {
+				Subscribe s= (Subscribe) it.next();
+				if(s.isPayed())
+				cart.add(new CartResponse(s.getCourse().getCoursename(),s.getCourse().getCourseimageurl(),s.getCourse().getDescription(),s.getCourse().getPrice(),s.getCourse().getRate(),s.getCourse().getCreated_at(),s.getCourse().isLocked(),s.getCourse().getTopic().getTopicname(),s.getId(),s.getCourse().getId()));
+			}
+			if (cart.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return new ResponseEntity<>(cart, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -57,7 +85,6 @@ public class SubscribeController {
 	public ResponseEntity<Subscribe> createCart(@RequestBody SubscribeRequest subscribe) {
 		try {
 			Course course= courseRepository.findByCourseId(subscribe.getCourseid());
-			//Optional<User> optionnaluser= userRepository.findById(subscribe.getUserid());
 			User user=userRepository.findByUserId(subscribe.getUserid());
 			Subscribe subscriber = subscribeRepository
 					.save(new Subscribe(false,course,user));

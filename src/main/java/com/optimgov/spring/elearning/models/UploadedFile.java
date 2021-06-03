@@ -10,11 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 @Entity
 public class UploadedFile implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id
+		@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@NotBlank
@@ -39,5 +35,11 @@ public class UploadedFile implements Serializable{
 	public void setFileurl(String fileurl) {
 		this.fileurl = fileurl;
 	}
+	public UploadedFile(Long id, @NotBlank @Size(max = 200) String fileurl) {
+		super();
+		this.id = id;
+		this.fileurl = fileurl;
+	}
+	
 	
 }

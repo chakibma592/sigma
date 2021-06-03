@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.optimgov.spring.elearning.models.UploadedFile;
-import com.optimgov.spring.elearning.models.User;
-import com.optimgov.spring.elearning.payload.response.MessageResponse;
 import com.optimgov.spring.elearning.repository.UploadedFileRepository;
 import com.optimgov.spring.elearning.repository.UserRepository;
 import com.optimgov.spring.elearning.upload.FilesStorageService;

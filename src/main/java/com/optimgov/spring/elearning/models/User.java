@@ -1,10 +1,8 @@
 package com.optimgov.spring.elearning.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -85,18 +83,7 @@ public class User implements Serializable{
 	}
 	
 
-	public User(Long id, @NotBlank @Size(max = 20) String username, @NotBlank @Size(max = 50) @Email String email,
-			@NotBlank @Size(max = 120) String password, @NotBlank boolean activate, @NotBlank Date created_at,
-			Set<Role> roles) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.activate = activate;
-		this.created_at = created_at;
-		this.roles = roles;
-	}
+
 	
 
 	public Long getId() {
@@ -201,13 +188,19 @@ public class User implements Serializable{
 		this.lastname = lastname;
 	}
 
-	public UploadedFile getFileid() {
+	
+	public UploadedFile getFile() {
 		return file;
 	}
 
-	public void setFileid(UploadedFile file) {
+	public void setFile(UploadedFile file) {
 		this.file = file;
 	}
+
+
+
+	
+
 
 
 	
