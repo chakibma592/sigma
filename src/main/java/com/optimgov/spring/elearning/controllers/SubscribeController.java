@@ -57,8 +57,8 @@ public class SubscribeController {
 	public ResponseEntity<Subscribe> createCart(@RequestBody SubscribeRequest subscribe) {
 		try {
 			Course course= courseRepository.findByCourseId(subscribe.getCourseid());
-			Optional<User> optionnaluser= userRepository.findById(subscribe.getUserid());
-			User user=optionnaluser.get();
+			//Optional<User> optionnaluser= userRepository.findById(subscribe.getUserid());
+			User user=userRepository.findByUserId(subscribe.getUserid());
 			Subscribe subscriber = subscribeRepository
 					.save(new Subscribe(false,course,user));
 			return new ResponseEntity<>(subscriber, HttpStatus.CREATED);
