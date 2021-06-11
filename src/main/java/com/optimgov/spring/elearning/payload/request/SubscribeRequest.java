@@ -13,7 +13,8 @@ public class SubscribeRequest {
 	
 	@NotBlank
 	private Long courseid;
-
+	@NotBlank
+	private Long teacherid;
 	public Date getSubscribingDate() {
 		return subscribingDate;
 	}
@@ -36,6 +37,14 @@ public class SubscribeRequest {
 
 	public void setCourseid(Long courseid) {
 		this.courseid = courseid;
+	}
+
+	public Long getTeacherid() {
+		return teacherid;
+	}
+
+	public void setTeacherid(Long teacherid) {
+		this.teacherid = teacherid;
 	}
 	
 }

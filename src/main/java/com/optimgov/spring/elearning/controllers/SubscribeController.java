@@ -21,6 +21,7 @@ import com.optimgov.spring.elearning.models.Course;
 import com.optimgov.spring.elearning.models.Subscribe;
 import com.optimgov.spring.elearning.models.User;
 import com.optimgov.spring.elearning.payload.request.SubscribeRequest;
+import com.optimgov.spring.elearning.payload.response.AllCartResponse;
 import com.optimgov.spring.elearning.payload.response.CartResponse;
 import com.optimgov.spring.elearning.repository.CourseRepository;
 import com.optimgov.spring.elearning.repository.SubscribeRepository;
@@ -38,23 +39,31 @@ public class SubscribeController {
 	@Autowired
     private CourseRepository courseRepository;
 	@GetMapping("/cartlist/{id}")
-	public ResponseEntity<ArrayList<CartResponse>> getCourseBySubscriber(@PathVariable("id") Long id) {
+	public ResponseEntity<AllCartResponse> getCourseBySubscriber(@PathVariable("id") Long id) {
 		try {
 			ArrayList<Subscribe> subscribers = new ArrayList<Subscribe>();
 			ArrayList<CartResponse> cart= new ArrayList<CartResponse>();
-
+            AllCartResponse allcart= new AllCartResponse();
+            allcart.setCartlist(cart);
 			subscribeRepository.findByCourseBySubscriberId(id).forEach(subscribers::add);
+			int i=0;
+			double cost=0.0;
 			Iterator it= subscribers.iterator();
 			while(it.hasNext()) {
 				Subscribe s= (Subscribe) it.next();
-				if(!s.isPayed())
-				cart.add(new CartResponse(s.getCourse().getCoursename(),s.getCourse().getCourseimageurl(),s.getCourse().getDescription(),s.getCourse().getPrice(),s.getCourse().getRate(),s.getCourse().getCreated_at(),s.getCourse().isLocked(),s.getCourse().getTopic().getTopicname(),s.getId(),s.getCourse().getId()));
+				if(!s.isPayed()) {
+					allcart.getCartlist().add(new CartResponse(s.getCourse().getCoursename(),s.getCourse().getCourseimageurl(),s.getCourse().getDescription(),s.getCourse().getPrice(),s.getCourse().getRate(),s.getCourse().getCreated_at(),s.getCourse().isLocked(),s.getCourse().getTopic().getTopicname(),s.getId(),s.getCourse().getId()));
+				    i++;
+				    cost= cost+s.getCourse().getPrice()-(s.getCourse().getPrice()*s.getCourse().getRate()/100);
+				}
 			}
+			allcart.setCount(i);
+			allcart.setCost(cost);
 			if (cart.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 
-			return new ResponseEntity<>(cart, HttpStatus.OK);
+			return new ResponseEntity<>(allcart, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

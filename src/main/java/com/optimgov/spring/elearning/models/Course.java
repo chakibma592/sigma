@@ -1,11 +1,7 @@
 package com.optimgov.spring.elearning.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,15 +10,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.type.TrueFalseType;
 import org.springframework.beans.factory.annotation.Value;
 @Entity
 public class Course implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -41,10 +40,14 @@ public class Course implements Serializable {
 	private Date created_at;
 	@Value("${some.key:false}")
 	private boolean locked;
-	 @ManyToOne(fetch = FetchType.EAGER, optional = false)
-		@JoinColumn(name = "topicid", nullable = false)
-		@OnDelete(action = OnDeleteAction.CASCADE)
-	    private Topic topic;
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "topicid", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Topic topic;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "teacherid", nullable = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Teacher teacher;
 	
 	public Course(@NotBlank @Size(max = 200) String coursename, @NotBlank @Size(max = 1000) String description,
 			@NotBlank double price, @NotBlank double rate, Date created_at, boolean locked, Topic topic) {
@@ -140,6 +143,18 @@ public class Course implements Serializable {
 	}
 	public void setCourseimageurl(String courseimageurl) {
 		this.courseimageurl = courseimageurl;
+	}
+
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
 	}
 
 

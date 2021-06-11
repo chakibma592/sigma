@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +18,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.optimgov.spring.elearning.models.ERole;
 import com.optimgov.spring.elearning.models.Role;
+import com.optimgov.spring.elearning.models.Teacher;
 import com.optimgov.spring.elearning.models.User;
 import com.optimgov.spring.elearning.payload.request.LoginRequest;
 import com.optimgov.spring.elearning.payload.request.SignupRequest;
 import com.optimgov.spring.elearning.payload.response.JwtResponse;
 import com.optimgov.spring.elearning.payload.response.MessageResponse;
 import com.optimgov.spring.elearning.repository.RoleRepository;
+import com.optimgov.spring.elearning.repository.TeacherRepository;
 import com.optimgov.spring.elearning.repository.UserRepository;
 import com.optimgov.spring.elearning.security.jwt.JwtUtils;
 import com.optimgov.spring.elearning.security.services.UserDetailsImpl;
@@ -41,6 +41,8 @@ public class AuthController {
 
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	TeacherRepository teacherRepository;
 
 	@Autowired
 	RoleRepository roleRepository;
@@ -74,6 +76,7 @@ public class AuthController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+		
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()
@@ -90,9 +93,11 @@ public class AuthController {
 		User user = new User(signUpRequest.getUsername(), 
 							 signUpRequest.getEmail(),
 							 encoder.encode(signUpRequest.getPassword()));
+		Teacher teacher=null;
 
 		Set<String> strRoles = signUpRequest.getRole();
 		Set<Role> roles = new HashSet<>();
+		
 
 		if (strRoles == null) {
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -105,13 +110,15 @@ public class AuthController {
 					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 					roles.add(adminRole);
+				
 
 					break;
-				case "mod":
+				case "teacher":
+					
 					Role modRole = roleRepository.findByName(ERole.ROLE_TEACHER)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 					roles.add(modRole);
-
+                   
 					break;
 				default:
 					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -120,9 +127,18 @@ public class AuthController {
 				}
 			});
 		}
-
-		user.setRoles(roles);
-		userRepository.save(user);
+  user.setRoles(roles);
+ Role r=roleRepository.findByName(ERole.ROLE_TEACHER).get();
+  if(roles.contains(r)) {
+	teacher= new Teacher();
+	teacher.setUsername(user.getUsername());
+	teacher.setPassword(user.getPassword());
+	teacher.setEmail(user.getEmail());
+	teacherRepository.save(teacher);
+  }
+  else	{	
+  userRepository.save(user);
+  }
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}

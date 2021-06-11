@@ -1,6 +1,7 @@
 package com.optimgov.spring.elearning.payload.request;
 
 import java.util.Date;
+import java.util.Set;
 
 public class ProfilRequest {
 	
@@ -12,7 +13,9 @@ public class ProfilRequest {
 	private Date birthday;
 	
 	private String email;
+	private String biographie;
 	private Long professionid;
+	private Set<String> role;
 	private long levelid;
 	private long fileid;
 	public String getFirstname() {
@@ -56,6 +59,18 @@ public class ProfilRequest {
 	}
 	public void setFileid(long fileid) {
 		this.fileid = fileid;
+	}
+	public String getBiographie() {
+		return biographie;
+	}
+	public void setBiographie(String biographie) {
+		this.biographie = biographie;
+	}
+	public Set<String> getRole() {
+		return role;
+	}
+	public void setRole(Set<String> role) {
+		this.role = role;
 	}
 	
 	
