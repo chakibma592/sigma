@@ -15,12 +15,14 @@ public class SignupRequest {
     private String email;
     
     private Set<String> role;
+   
     
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
    
     private String newpassword;
+    private String previlege;
     public String getUsername() {
         return username;
     }
@@ -60,5 +62,16 @@ public class SignupRequest {
 	public void setNewpassword(String newpassword) {
 		this.newpassword = newpassword;
 	}
+
+	public String getPrevilege() {
+		return previlege;
+	}
+
+	public void setPrevilege(String previlege) {
+		this.previlege = previlege;
+	}
+
+	
+
     
 }
