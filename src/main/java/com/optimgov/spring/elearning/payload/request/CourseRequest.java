@@ -11,17 +11,15 @@ public class CourseRequest {
 	@NotBlank
 	private String courseimageurl;
 	@NotBlank
-	private String description;
-	
-	private double price;
-	
+	private String description;	
+	private double price;	
 	private double rate;
-	@NotBlank
-	private Date created_at;
-	@NotBlank
-	private boolean locked;
 	
+	private Date created_at;
+	
+	private boolean locked;	
 	private Long topicid;
+	private Long teacherid;
 	
 	public String getCoursename() {
 		return coursename;
@@ -70,6 +68,12 @@ public class CourseRequest {
 	}
 	public void setTopicid(Long topicid) {
 		this.topicid = topicid;
+	}
+	public Long getTeacherid() {
+		return teacherid;
+	}
+	public void setTeacherid(Long teacherid) {
+		this.teacherid = teacherid;
 	}
 	
 	

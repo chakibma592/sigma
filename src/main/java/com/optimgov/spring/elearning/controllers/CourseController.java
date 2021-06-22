@@ -31,12 +31,15 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import com.optimgov.spring.elearning.models.Course;
 import com.optimgov.spring.elearning.models.Subscribe;
+import com.optimgov.spring.elearning.models.Teacher;
 import com.optimgov.spring.elearning.models.Topic;
 import com.optimgov.spring.elearning.models.User;
 import com.optimgov.spring.elearning.payload.request.CourseRequest;
 import com.optimgov.spring.elearning.payload.request.SubscribeRequest;
 import com.optimgov.spring.elearning.repository.CourseRepository;
+import com.optimgov.spring.elearning.repository.TeacherRepository;
 import com.optimgov.spring.elearning.repository.TopicRepository;
+import com.optimgov.spring.elearning.repository.UserRepository;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/course")
@@ -45,6 +48,8 @@ public class CourseController {
     private CourseRepository courseRepository;
 	@Autowired
     private TopicRepository topicRepository;
+	@Autowired
+    private TeacherRepository teacherRepository;
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<HttpStatus> deletecourse(@PathVariable("id") long id) {
 		try {
@@ -60,9 +65,11 @@ public class CourseController {
 			
 			Optional<Topic> optionnaltopic= topicRepository.findById(courserequest.getTopicid());
 			Topic topic=optionnaltopic.get();
+			 
+			Teacher teacher=teacherRepository.findByTeacherId(courserequest.getTeacherid());
 			Course course = courseRepository
 					.save(new Course(courserequest.getCoursename(),courserequest.getCourseimageurl(), courserequest.getDescription(),
-							courserequest.getPrice(), courserequest.getRate(), courserequest.getCreated_at(), false, topic));
+							courserequest.getPrice(), courserequest.getRate(), false, topic,teacher));
 			return new ResponseEntity<>(course, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

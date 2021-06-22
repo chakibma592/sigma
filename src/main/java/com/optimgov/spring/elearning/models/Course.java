@@ -10,12 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.type.TrueFalseType;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.annotation.CreatedDate;
 @Entity
 public class Course implements Serializable {
 	/**
@@ -36,7 +39,9 @@ public class Course implements Serializable {
 	private double price;
 	@Value("${some.key:0}")
 	private double rate;
-	@Column(name="created_at", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreatedDate
+	@Column(name="created_at", nullable = false, updatable = false)
 	private Date created_at;
 	@Value("${some.key:false}")
 	private boolean locked;
@@ -50,7 +55,7 @@ public class Course implements Serializable {
 	private Teacher teacher;
 	
 	public Course(@NotBlank @Size(max = 200) String coursename, @NotBlank @Size(max = 1000) String description,
-			@NotBlank double price, @NotBlank double rate, Date created_at, boolean locked, Topic topic) {
+			@NotBlank double price, @NotBlank double rate, Date created_at, boolean locked, Topic topic, Teacher teacher) {
 		super();
 		this.coursename = coursename;
 		this.description = description;
@@ -59,11 +64,12 @@ public class Course implements Serializable {
 		this.created_at = created_at;
 		this.locked = locked;
 		this.topic = topic;
+		this.teacher=teacher;
 	}
 	
 	public Course(@NotBlank @Size(max = 200) String coursename, @Size(max = 1000) String courseimageurl,
 			@NotBlank @Size(max = 1000) String description, @NotBlank double price, @NotBlank double rate,
-			Date created_at, boolean locked, Topic topic) {
+			Date created_at, boolean locked, Topic topic, Teacher teacher) {
 		super();
 		this.coursename = coursename;
 		this.courseimageurl = courseimageurl;
@@ -73,9 +79,10 @@ public class Course implements Serializable {
 		this.created_at = created_at;
 		this.locked = locked;
 		this.topic = topic;
+		this.teacher=teacher;
 	}
 	public Course(@NotBlank @Size(max = 200) String coursename, @Size(max = 1000) String courseimageurl,
-			@NotBlank @Size(max = 1000) String description, @NotBlank double price, @NotBlank double rate, boolean locked, Topic topic) {
+			@NotBlank @Size(max = 1000) String description, @NotBlank double price, @NotBlank double rate, boolean locked, Topic topic, Teacher teacher) {
 		super();
 		this.coursename = coursename;
 		this.courseimageurl = courseimageurl;
@@ -84,6 +91,7 @@ public class Course implements Serializable {
 		this.rate = rate;
 		this.locked = locked;
 		this.topic = topic;
+		this.teacher=teacher;
 	}
 
 	public Course() {

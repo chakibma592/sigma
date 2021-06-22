@@ -124,6 +124,7 @@ public class AuthController {
 	teacher.setUsername(user.getUsername());
 	teacher.setPassword(user.getPassword());
 	teacher.setEmail(user.getEmail());
+	teacher.setRoles(user.getRoles());
 	teacherRepository.save(teacher);
   }
   else	{	
