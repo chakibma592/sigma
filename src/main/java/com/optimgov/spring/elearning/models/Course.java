@@ -2,7 +2,6 @@ package com.optimgov.spring.elearning.models;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,17 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.type.TrueFalseType;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.annotation.CreatedDate;
 @Entity
-public class Course implements Serializable {
+public class Course extends AuditModel implements Serializable {
 	/**
 	 * 
 	 */
@@ -35,14 +30,12 @@ public class Course implements Serializable {
 	private String courseimageurl;
 	@NotBlank
 	@Size(max = 1000)
-	private String description;	
+	private String description;
+	@Size(max = 1000)
+	private String shortdescription;	
 	private double price;
 	@Value("${some.key:0}")
-	private double rate;
-	@Temporal(TemporalType.TIMESTAMP)
-	@CreatedDate
-	@Column(name="created_at", nullable = false, updatable = false)
-	private Date created_at;
+	private double discount;
 	@Value("${some.key:false}")
 	private boolean locked;
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -53,6 +46,10 @@ public class Course implements Serializable {
 	@JoinColumn(name = "teacherid", nullable = true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Teacher teacher;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "levelid", nullable = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Level level;
 	
 	public Course(@NotBlank @Size(max = 200) String coursename, @NotBlank @Size(max = 1000) String description,
 			@NotBlank double price, @NotBlank double rate, Date created_at, boolean locked, Topic topic, Teacher teacher) {
@@ -60,8 +57,7 @@ public class Course implements Serializable {
 		this.coursename = coursename;
 		this.description = description;
 		this.price = price;
-		this.rate = rate;
-		this.created_at = created_at;
+		this.discount = rate;
 		this.locked = locked;
 		this.topic = topic;
 		this.teacher=teacher;
@@ -75,8 +71,7 @@ public class Course implements Serializable {
 		this.courseimageurl = courseimageurl;
 		this.description = description;
 		this.price = price;
-		this.rate = rate;
-		this.created_at = created_at;
+		this.discount = rate;
 		this.locked = locked;
 		this.topic = topic;
 		this.teacher=teacher;
@@ -88,10 +83,26 @@ public class Course implements Serializable {
 		this.courseimageurl = courseimageurl;
 		this.description = description;
 		this.price = price;
-		this.rate = rate;
+		this.discount = rate;
 		this.locked = locked;
 		this.topic = topic;
 		this.teacher=teacher;
+	}
+
+	public Course(@NotBlank @Size(max = 200) String coursename, @Size(max = 1000) String courseimageurl,
+			@NotBlank @Size(max = 1000) String description, @Size(max = 1000) String shortdescription, double price,
+			double discount, boolean locked, Topic topic, Teacher teacher, Level level) {
+		super();
+		this.coursename = coursename;
+		this.courseimageurl = courseimageurl;
+		this.description = description;
+		this.shortdescription = shortdescription;
+		this.price = price;
+		this.discount = discount;
+		this.locked = locked;
+		this.topic = topic;
+		this.teacher = teacher;
+		this.level = level;
 	}
 
 	public Course() {
@@ -121,18 +132,13 @@ public class Course implements Serializable {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	public double getRate() {
-		return rate;
+	public double getDiscount() {
+		return this.discount;
 	}
-	public void setRate(double rate) {
-		this.rate = rate;
+	public void setDiscount(double discount) {
+		this.discount = discount;
 	}
-	public Date getCreated_at() {
-		return created_at;
-	}
-	public void setCreated_at(Date created_at) {
-		this.created_at = created_at;
-	}
+
 	public boolean isLocked() {
 		return locked;
 	}
@@ -163,6 +169,22 @@ public class Course implements Serializable {
 
 	public void setLocked(boolean locked) {
 		this.locked = locked;
+	}
+
+	public String getShortdescription() {
+		return shortdescription;
+	}
+
+	public void setShortdescription(String shortdescription) {
+		this.shortdescription = shortdescription;
+	}
+
+	public Level getLevel() {
+		return level;
+	}
+
+	public void setLevel(Level level) {
+		this.level = level;
 	}
 
 

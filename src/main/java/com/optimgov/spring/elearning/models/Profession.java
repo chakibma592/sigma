@@ -47,5 +47,8 @@ public class Profession implements Serializable{
 	public void setProfessionname(String professionname) {
 		this.professionname = professionname;
 	}
+
+
+	
 	
 }

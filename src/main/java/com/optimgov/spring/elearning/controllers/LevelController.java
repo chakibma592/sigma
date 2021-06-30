@@ -1,8 +1,6 @@
 package com.optimgov.spring.elearning.controllers;
-
 import java.util.ArrayList;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,46 +14,45 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.optimgov.spring.elearning.models.Profession;
-import com.optimgov.spring.elearning.repository.ProfessionRepository;
+import com.optimgov.spring.elearning.models.Level;
+import com.optimgov.spring.elearning.repository.LevelRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/professions")
-public class ProfessionController {
+@RequestMapping("/api/levels")
+public class LevelController {
 	@Autowired
-    private ProfessionRepository professionRepository;
+    private LevelRepository levelRepository;
 	@PostMapping("/form")
-	@PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TEACHER')")
-	public ResponseEntity<Profession> createProfession(@RequestBody Profession professionRequest) {
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<Level> createLevel(@RequestBody Level levelRequest) {
 		try {
 			
-			Profession profession = professionRepository
-					.save(new Profession(professionRequest.getProfessionname()));
-			return new ResponseEntity<>(profession, HttpStatus.CREATED);
+			Level level = levelRepository
+					.save(new Level(levelRequest.getLevelname()));
+			return new ResponseEntity<>(level, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	@PutMapping("/update/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Profession> updateProfession(@PathVariable("id") long id,@RequestBody Profession professionRequest) {
-		Optional<Profession> professionData = professionRepository.findById(id);
+	public ResponseEntity<Level> updateLevel(@PathVariable("id") long id,@RequestBody Level levelRequest) {
+		Optional<Level> levelData = levelRepository.findById(id);
 
-		if (professionData.isPresent()) {
-			Profession profession = professionData.get();
-			profession.setProfessionname(professionRequest.getProfessionname());
-			return new ResponseEntity<>(professionRepository.save(profession), HttpStatus.OK);
+		if (levelData.isPresent()) {
+			Level level = levelData.get();
+			level.setLevelname(levelRequest.getLevelname());
+			return new ResponseEntity<>(levelRepository.save(level), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	@DeleteMapping("/delete/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<HttpStatus> deleteProfession(@PathVariable("id") long id) {
+	public ResponseEntity<HttpStatus> deleteLevel(@PathVariable("id") long id) {
 		try {
-			professionRepository.deleteById(id);
+			levelRepository.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -63,15 +60,15 @@ public class ProfessionController {
 	}
 	@GetMapping("/list")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')or hasRole('USER')")
-	public ResponseEntity<ArrayList<Profession>>getProfessionsList() {
+	public ResponseEntity<ArrayList<Level>>getLevelsList() {
 		 try {
-			 ArrayList<Profession> professions = new ArrayList<Profession>();
-			 professionRepository.findAll().forEach(professions::add);
-			 if (professions.isEmpty()) {
+			 ArrayList<Level> levels = new ArrayList<Level>();
+			 levelRepository.findAll().forEach(levels::add);
+			 if (levels.isEmpty()) {
 			        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			      }
 
-			      return new ResponseEntity<>(professions, HttpStatus.OK);
+			      return new ResponseEntity<>(levels, HttpStatus.OK);
 		    } catch (Exception e) {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		    }

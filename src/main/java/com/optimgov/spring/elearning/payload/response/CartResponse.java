@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 
+import com.optimgov.spring.elearning.models.Level;
+
 public class CartResponse {
 	@NotBlank
 	private String coursename;
@@ -11,28 +13,43 @@ public class CartResponse {
 	private String courseimageurl;
 	@NotBlank
 	private String description;	
+	private String shortdescription;	
 	private double price;	
-	private double rate;
-	@NotBlank
-	private Date created_at;
+	private double discount;
 	@NotBlank
 	private boolean locked;
-	
+	private String levelname;
 	private String topicname;
 	private Long id;
 	private Long courseid;
 	public CartResponse(@NotBlank String coursename, @NotBlank String courseimageurl, @NotBlank String description,
-			double price, double rate, @NotBlank Date created_at, @NotBlank boolean locked, String topicname, Long id) {
+			double price, double discount, @NotBlank boolean locked, String topicname, Long id) {
 		super();
 		this.coursename = coursename;
 		this.courseimageurl = courseimageurl;
 		this.description = description;
 		this.price = price;
-		this.rate = rate;
-		this.created_at = created_at;
+		this.discount = discount;
 		this.locked = locked;
 		this.topicname = topicname;
 		this.id = id;
+	}
+
+	public CartResponse(@NotBlank String coursename, @NotBlank String courseimageurl, @NotBlank String description,
+			double price, double discount, @NotBlank boolean locked, String topicname, Long id,
+			Long courseid,String levelname,String shortdescription) {
+		super();
+		this.coursename = coursename;
+		this.courseimageurl = courseimageurl;
+		this.description = description;
+		this.price = price;
+		this.discount = discount;
+		this.locked = locked;
+		this.topicname = topicname;
+		this.id = id;
+		this.courseid = courseid;
+		this.levelname= levelname;
+		this.shortdescription= shortdescription;
 	}
 	public CartResponse() {
 		super();
@@ -61,18 +78,13 @@ public class CartResponse {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	public double getRate() {
-		return rate;
+	public double getDiscount() {
+		return discount;
 	}
-	public void setRate(double rate) {
-		this.rate = rate;
+	public void setDiscount(double discount) {
+		this.discount = discount;
 	}
-	public Date getCreated_at() {
-		return created_at;
-	}
-	public void setCreated_at(Date created_at) {
-		this.created_at = created_at;
-	}
+	
 	public boolean isLocked() {
 		return locked;
 	}
@@ -98,20 +110,20 @@ public class CartResponse {
 		this.courseid = courseid;
 	}
 	
-	public CartResponse(@NotBlank String coursename, @NotBlank String courseimageurl, @NotBlank String description,
-			double price, double rate, @NotBlank Date created_at, @NotBlank boolean locked, String topicname, Long id,
-			Long courseid) {
-		super();
-		this.coursename = coursename;
-		this.courseimageurl = courseimageurl;
-		this.description = description;
-		this.price = price;
-		this.rate = rate;
-		this.created_at = created_at;
-		this.locked = locked;
-		this.topicname = topicname;
-		this.id = id;
-		this.courseid = courseid;
+
+	public String getLevelname() {
+		return levelname;
+	}
+	public void setLevelname(String levelname) {
+		this.levelname = levelname;
+	}
+
+	public String getShortdescription() {
+		return shortdescription;
+	}
+
+	public void setShortdescription(String shortdescription) {
+		this.shortdescription = shortdescription;
 	}
 	
 	

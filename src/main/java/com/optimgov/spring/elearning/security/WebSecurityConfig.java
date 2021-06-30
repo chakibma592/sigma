@@ -58,8 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable()
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
-			.antMatchers("/api/elearning/**").permitAll()
+			.authorizeRequests().antMatchers("/api/authentication/**").permitAll()
+			.antMatchers("/api/sigmalearning/**").permitAll()
 			.antMatchers("/api/topic/**").permitAll()
 			.antMatchers("/api/course/**").permitAll()
 			.anyRequest().authenticated();
@@ -67,8 +67,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
-	/*@Override
-	public void configure(WebSecurity web) throws Exception {
-	    web.ignoring().antMatchers("/api/topic/**");
-	}*/
+/*	@Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs",
+                                   "/configuration/ui",
+                                   "/swagger-resources/**",
+                                   "/configuration/security",
+                                   "/swagger-ui.html",
+                                   "/webjars/**");
+    }*/
 }

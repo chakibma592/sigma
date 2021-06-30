@@ -3,24 +3,20 @@ package com.optimgov.spring.elearning.controllers;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.optimgov.spring.elearning.models.ERole;
 import com.optimgov.spring.elearning.models.Profession;
 import com.optimgov.spring.elearning.models.Role;
@@ -38,7 +34,7 @@ import com.optimgov.spring.elearning.repository.UserRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/profil")
+@RequestMapping("/api/profils")
 public class ProfilController {
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -55,6 +51,7 @@ public class ProfilController {
 	@Autowired
     private TeacherRepository teacherRepository;
 	@PutMapping("/update/{id}")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')or hasRole('USER')")
 	public ResponseEntity<MessageResponse> updateProfil(@PathVariable("id") long id,@RequestBody ProfilRequest profilrequest) {
 				
 			
@@ -135,6 +132,7 @@ public class ProfilController {
 		//}
 	}
 	@PutMapping("/passwordupdate/{id}")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')or hasRole('USER')")
 	public ResponseEntity<?> updatepasswordUser(@PathVariable("id") long id,@RequestBody SignupRequest signUpRequest) {
 		User user = userRepository.findByUserId(id);
 		Authentication authentication = authenticationManager.authenticate(

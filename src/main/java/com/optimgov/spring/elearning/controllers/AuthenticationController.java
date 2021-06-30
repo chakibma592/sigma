@@ -34,8 +34,8 @@ import com.optimgov.spring.elearning.security.services.UserDetailsImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
-public class AuthController {
+@RequestMapping("/api/authentication")
+public class AuthenticationController {
 	@Autowired
 	AuthenticationManager authenticationManager;
 

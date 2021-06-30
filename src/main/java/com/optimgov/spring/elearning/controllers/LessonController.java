@@ -4,6 +4,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +18,9 @@ import com.optimgov.spring.elearning.models.Lesson;
 import com.optimgov.spring.elearning.payload.request.LessonRequest;
 import com.optimgov.spring.elearning.repository.CourseRepository;
 import com.optimgov.spring.elearning.repository.LessonRepository;
-import com.optimgov.spring.elearning.upload.FilesStorageService;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/lesson")
+@RequestMapping("/api/lessons")
 public class LessonController {
 	@Autowired
     private LessonRepository lessonRepository;
@@ -28,7 +28,8 @@ public class LessonController {
     private CourseRepository courseRepository;
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<HttpStatus> deletecourse(@PathVariable("id") long id) {
+	@PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
+	public ResponseEntity<HttpStatus> deleteLesson(@PathVariable("id") long id) {
 		try {
 			lessonRepository.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -37,6 +38,7 @@ public class LessonController {
 		}
 	}
 	@PostMapping("/form")
+	@PreAuthorize("hasRole('TEACHER')")
 	public ResponseEntity<Lesson> createLesson(@RequestBody LessonRequest lessonrequest) {
 		try {
 			
@@ -51,6 +53,7 @@ public class LessonController {
 		}
 	}
 	@PutMapping("/update/{id}")
+	@PreAuthorize("hasRole('TEACHER')")
 	public ResponseEntity<Lesson> updateLesson(@PathVariable("id") long id,@RequestBody LessonRequest lessonrequest) {
 		Optional<Lesson> lessonData = lessonRepository.findById(id);
 

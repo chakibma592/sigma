@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,18 +16,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.optimgov.spring.elearning.models.Profession;
 import com.optimgov.spring.elearning.models.StudiesLevel;
 import com.optimgov.spring.elearning.repository.StudiesLevelRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/level")
+@RequestMapping("/api/studieslevels")
 public class StudiesLevelController {
 	@Autowired
     private StudiesLevelRepository studiesLevelRepository;
 	@PostMapping("/form")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<StudiesLevel> createLevel(@RequestBody StudiesLevel studiesLevelRequest) {
 		try {
 			
@@ -38,6 +38,7 @@ public class StudiesLevelController {
 		}
 	}
 	@PutMapping("/update/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<StudiesLevel> updateLevel(@PathVariable("id") long id,@RequestBody StudiesLevel studiesLevelRequest) {
 		Optional<StudiesLevel> studiesLevelData = studiesLevelRepository.findById(id);
 
@@ -50,6 +51,7 @@ public class StudiesLevelController {
 		}
 	}
 	@DeleteMapping("/delete/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<HttpStatus> deleteLevel(@PathVariable("id") long id) {
 		try {
 			studiesLevelRepository.deleteById(id);
@@ -59,7 +61,8 @@ public class StudiesLevelController {
 		}
 	}
 	@GetMapping("/list")
-	public ResponseEntity<ArrayList<StudiesLevel>>getListLevel() {
+	@PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')or hasRole('USER')")
+	public ResponseEntity<ArrayList<StudiesLevel>>getLevelsList() {
 		 try {
 			 ArrayList<StudiesLevel> studiesLevels = new ArrayList<StudiesLevel>();
 			 studiesLevelRepository.findAll().forEach(studiesLevels::add);
