@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.constraints.Null;
 @Entity
 public class Teacher extends User implements Serializable{
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 @Column(nullable=true)
 private String biographie;
 

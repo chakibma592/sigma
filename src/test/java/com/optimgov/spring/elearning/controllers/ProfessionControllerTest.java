@@ -70,7 +70,7 @@ public class ProfessionControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         token =result.getResponse().getHeader("Authorization");
-        System.err.println(result.getResponse().getContentAsString());
+        System.err.println(result.getResponse().getContentType());
     }
 
 
