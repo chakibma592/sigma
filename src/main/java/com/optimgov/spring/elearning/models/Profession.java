@@ -30,11 +30,6 @@ public class Profession implements Serializable{
 		this.professionname = professionname;
 	}
 
-	public Profession(Long id, @NotBlank @Size(max = 200) String professionname) {
-		super();
-		this.id = id;
-		this.professionname = professionname;
-	}
 	public Long getId() {
 		return id;
 	}

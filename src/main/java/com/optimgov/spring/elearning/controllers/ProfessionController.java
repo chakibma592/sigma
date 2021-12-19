@@ -64,7 +64,7 @@ public class ProfessionController {
 	@GetMapping("/list")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')or hasRole('USER')")
 	public ResponseEntity<ArrayList<Profession>>getProfessionsList() {
-		 try {
+		 
 			 ArrayList<Profession> professions = new ArrayList<Profession>();
 			 professionRepository.findAll().forEach(professions::add);
 			 if (professions.isEmpty()) {
@@ -72,8 +72,6 @@ public class ProfessionController {
 			      }
 
 			      return new ResponseEntity<>(professions, HttpStatus.OK);
-		    } catch (Exception e) {
-		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		    }
+		   
 	  }
 }

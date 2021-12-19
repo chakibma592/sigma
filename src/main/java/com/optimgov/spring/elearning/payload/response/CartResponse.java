@@ -37,7 +37,7 @@ public class CartResponse {
 
 	public CartResponse(@NotBlank String coursename, @NotBlank String courseimageurl, @NotBlank String description,
 			double price, double discount, @NotBlank boolean locked, String topicname, Long id,
-			Long courseid,String levelname,String shortdescription) {
+			Long courseid,String shortdescription) {
 		super();
 		this.coursename = coursename;
 		this.courseimageurl = courseimageurl;
@@ -48,7 +48,7 @@ public class CartResponse {
 		this.topicname = topicname;
 		this.id = id;
 		this.courseid = courseid;
-		this.levelname= levelname;
+		//this.levelname= levelname;
 		this.shortdescription= shortdescription;
 	}
 	public CartResponse() {
@@ -124,6 +124,14 @@ public class CartResponse {
 
 	public void setShortdescription(String shortdescription) {
 		this.shortdescription = shortdescription;
+	}
+
+	@Override
+	public String toString() {
+		return "CartResponse [coursename=" + coursename + ", courseimageurl=" + courseimageurl + ", description="
+				+ description + ", shortdescription=" + shortdescription + ", price=" + price + ", discount=" + discount
+				+ ", locked=" + locked + ", levelname=" + levelname + ", topicname=" + topicname + ", id=" + id
+				+ ", courseid=" + courseid + "]";
 	}
 	
 	

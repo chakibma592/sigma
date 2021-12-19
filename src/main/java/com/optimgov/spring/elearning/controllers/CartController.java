@@ -45,17 +45,21 @@ public class CartController {
             AllCartResponse allcart= new AllCartResponse();
             allcart.setCartlist(cart);
 			subscribeRepository.findByCourseBySubscriberId(id).forEach(subscribers::add);
+			
 			int i=0;
 			double cost=0.0;
 			Iterator it= subscribers.iterator();
 			while(it.hasNext()) {
 				Subscribe s= (Subscribe) it.next();
+				
+				
 				if(!s.isPayed()) {
-					allcart.getCartlist().add(new CartResponse(s.getCourse().getCoursename(),s.getCourse().getCourseimageurl(),s.getCourse().getDescription(),s.getCourse().getPrice(),s.getCourse().getDiscount(),s.getCourse().isLocked(),s.getCourse().getTopic().getTopicname(),s.getId(),s.getCourse().getId(),s.getCourse().getLevel().getLevelname(),s.getCourse().getShortdescription()));
+					allcart.getCartlist().add(new CartResponse(s.getCourse().getCoursename(),s.getCourse().getCourseimageurl(),s.getCourse().getDescription(),s.getCourse().getPrice(),s.getCourse().getDiscount(),s.getCourse().isLocked(),s.getCourse().getTopic().getTopicname(),s.getId(),s.getCourse().getId(),s.getCourse().getShortdescription()));
 				    i++;
-				    cost= cost+s.getCourse().getPrice()-(s.getCourse().getPrice()*s.getCourse().getDiscount()/100);
+				    cost+=(s.getCourse().getPrice()-(s.getCourse().getPrice()*s.getCourse().getDiscount()/100));
 				}
 			}
+			
 			allcart.setCount(i);
 			allcart.setCost(cost);
 			if (cart.isEmpty()) {

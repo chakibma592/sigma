@@ -60,14 +60,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.authorizeRequests().antMatchers("/api/authentication/**").permitAll()
 			.antMatchers("/api/sigmalearning/**").permitAll()
-			.antMatchers("/api/topic/**").permitAll()
+			.antMatchers("/api/swagger-ui.html").permitAll()
 			.antMatchers("/api/course/**").permitAll()
 			.anyRequest().authenticated();
 
 		
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
-/*	@Override
+	/*@Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/v2/api-docs",
                                    "/configuration/ui",

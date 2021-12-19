@@ -50,7 +50,7 @@ public class SubscribeController {
 			while(it.hasNext()) {
 				Subscribe s= (Subscribe) it.next();
 				if(s.isPayed())
-				cart.add(new CartResponse(s.getCourse().getCoursename(),s.getCourse().getCourseimageurl(),s.getCourse().getDescription(),s.getCourse().getPrice(),s.getCourse().getDiscount(),s.getCourse().isLocked(),s.getCourse().getTopic().getTopicname(),s.getId(),s.getCourse().getId(),s.getCourse().getLevel().getLevelname(),s.getCourse().getShortdescription()));
+				cart.add(new CartResponse(s.getCourse().getCoursename(),s.getCourse().getCourseimageurl(),s.getCourse().getDescription(),s.getCourse().getPrice(),s.getCourse().getDiscount(),s.getCourse().isLocked(),s.getCourse().getTopic().getTopicname(),s.getId(),s.getCourse().getId(),s.getCourse().getShortdescription()));
 			}
 			if (cart.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);

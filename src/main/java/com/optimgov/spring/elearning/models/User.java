@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
@@ -76,7 +77,7 @@ public class User implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "fileid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-    private UploadedFile file;
+	private UploadedFile file;
 	public User() {
 	}
 
@@ -87,10 +88,24 @@ public class User implements Serializable{
 		this.activate=false;
 		
 	}
-	
-
-
-	
+	public User(@NotBlank @Size(max = 20) String username, @Size(max = 20) String firstname,
+			@Size(max = 20) String lastname, @NotBlank @Size(max = 50) @Email String email,
+			@NotBlank @Size(max = 120) String password, Date birthday, boolean activate, Date created_at,
+			Set<Role> roles, Profession profession, StudiesLevel studieslevel, UploadedFile file) {
+		super();
+		this.username = username;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.password = password;
+		this.birthday = birthday;
+		this.activate = activate;
+		this.created_at = created_at;
+		this.roles = roles;
+		this.profession = profession;
+		this.studieslevel = studieslevel;
+		this.file = file;
+	}
 
 	public Long getId() {
 		return id;

@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.validation.constraints.NotBlank;
 
 public class SubscribeRequest {
-	@NotBlank
+	
 	private Date subscribingDate;
 
 	@NotBlank
@@ -13,7 +13,7 @@ public class SubscribeRequest {
 	
 	@NotBlank
 	private Long courseid;
-	@NotBlank
+	
 	private Long teacherid;
 	public Date getSubscribingDate() {
 		return subscribingDate;

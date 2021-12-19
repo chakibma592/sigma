@@ -6,5 +6,5 @@ import com.optimgov.spring.elearning.models.Profession;
 
 @Repository
 public interface ProfessionRepository extends JpaRepository<Profession, Long>{
-
+	 Boolean existsByProfessionname(String professionname);
 }
