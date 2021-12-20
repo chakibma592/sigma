@@ -66,7 +66,7 @@ public class User implements Serializable{
 				joinColumns = @JoinColumn(name = "user_id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	/*@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "professionid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
     private Profession profession;
@@ -74,7 +74,7 @@ public class User implements Serializable{
 	@JoinColumn(name = "studieslevelid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
     private StudiesLevel studieslevel;
-	/*@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "fileid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private UploadedFile file;*/
@@ -102,8 +102,8 @@ public class User implements Serializable{
 		this.activate = activate;
 		this.created_at = created_at;
 		this.roles = roles;
-		this.profession = profession;
-		this.studieslevel = studieslevel;
+		//this.profession = profession;
+		//this.studieslevel = studieslevel;
 		//this.file = file;
 	}
 
@@ -175,7 +175,7 @@ public class User implements Serializable{
 
 	
 
-	public Profession getProfession() {
+	/*public Profession getProfession() {
 		return profession;
 	}
 
@@ -191,7 +191,7 @@ public class User implements Serializable{
 
 	public void setStudieslevel(StudiesLevel studieslevel) {
 		this.studieslevel = studieslevel;
-	}
+	}*/
 
 	public String getFirstname() {
 		return firstname;

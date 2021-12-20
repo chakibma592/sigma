@@ -50,6 +50,7 @@ public class ProfilController {
     private RoleRepository roleRepository;
 	@Autowired
     private TeacherRepository teacherRepository;
+	/*
 	@PutMapping("/update/{id}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')or hasRole('USER')")
 	public ResponseEntity<MessageResponse> updateProfil(@PathVariable("id") long id,@RequestBody ProfilRequest profilrequest) {
@@ -150,6 +151,6 @@ public class ProfilController {
 
 		
 		
-	}
+	}*/
 
 }
