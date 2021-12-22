@@ -40,4 +40,19 @@ public class ElementModule {
 		this.elementname = elementname;
 	}
 	
+	public Module getModule() {
+		return module;
+	}
+	public void setModule(Module module) {
+		this.module = module;
+	}
+	public ElementModule(@NotBlank @Size(max = 200) String elementname, Module module) {
+		super();
+		this.elementname = elementname;
+		this.module = module;
+	}
+	public ElementModule() {
+		super();
+	}
+	
 }

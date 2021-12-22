@@ -44,6 +44,14 @@ public class Module {
 	public void setFiliere(Filiere filiere) {
 		this.filiere = filiere;
 	}
+	public Module(@NotBlank @Size(max = 200) String modulename, Filiere filiere) {
+		super();
+		this.modulename = modulename;
+		this.filiere = filiere;
+	}
+	public Module() {
+		super();
+	}
 	
 	
 }
