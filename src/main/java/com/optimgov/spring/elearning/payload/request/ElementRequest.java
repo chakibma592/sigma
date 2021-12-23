@@ -33,5 +33,9 @@ public class ElementRequest {
 		this.elementname = elementname;
 		this.moduleid = moduleid;
 	}
+	public ElementRequest() {
+		super();
+	}
+	
 	
 }
