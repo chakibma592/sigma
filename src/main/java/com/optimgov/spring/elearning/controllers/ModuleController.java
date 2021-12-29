@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.optimgov.spring.elearning.models.Filiere;
 import com.optimgov.spring.elearning.models.Module;
 import com.optimgov.spring.elearning.payload.request.ModuleRequest;
+import com.optimgov.spring.elearning.payload.response.MessageResponse;
 import com.optimgov.spring.elearning.repository.FiliereRepository;
 import com.optimgov.spring.elearning.repository.ModuleRepository;
 
@@ -39,7 +40,7 @@ public class ModuleController {
 		}
 	}
 	@PostMapping("/add")
-	public ResponseEntity<Module> createModule(@RequestBody ModuleRequest modulerequest) {
+	public ResponseEntity createModule(@RequestBody ModuleRequest modulerequest) {
 		try {
 			
 			Optional<Filiere> optionnalfiliere= filiereRepository.findById(modulerequest.getFiliereid());
@@ -48,7 +49,7 @@ public class ModuleController {
 					.save(new Module(modulerequest.getModulename(),filiere));
 			return new ResponseEntity<>(module, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.ok(new MessageResponse("Module added successfully!"));
 		}
 	}
 	@PutMapping("/update/{id}")

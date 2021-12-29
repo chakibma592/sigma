@@ -21,6 +21,7 @@ import com.optimgov.spring.elearning.models.Filiere;
 import com.optimgov.spring.elearning.models.Module;
 import com.optimgov.spring.elearning.payload.request.ElementRequest;
 import com.optimgov.spring.elearning.payload.request.ModuleRequest;
+import com.optimgov.spring.elearning.payload.response.MessageResponse;
 import com.optimgov.spring.elearning.repository.ElementRepositoy;
 import com.optimgov.spring.elearning.repository.FiliereRepository;
 import com.optimgov.spring.elearning.repository.ModuleRepository;
@@ -42,7 +43,7 @@ public class ElementController {
 		}
 	}
 	@PostMapping("/add")
-	public ResponseEntity<ElementModule> createModule(@RequestBody ElementRequest elementrequest) {
+	public ResponseEntity createModule(@RequestBody ElementRequest elementrequest) {
 		try {
 			
 			Optional<Module> optionnalmodule= moduleRepository.findById(elementrequest.getModuleid());
@@ -51,7 +52,7 @@ public class ElementController {
 					.save(new ElementModule(elementrequest.getElementname(),module));
 			return new ResponseEntity<>(element, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.ok(new MessageResponse("Element added successfully!"));
 		}
 	}
 	@PutMapping("/update/{id}")

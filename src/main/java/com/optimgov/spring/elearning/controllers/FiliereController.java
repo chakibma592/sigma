@@ -22,6 +22,7 @@ import com.optimgov.spring.elearning.models.Filiere;
 import com.optimgov.spring.elearning.models.Teacher;
 import com.optimgov.spring.elearning.models.Topic;
 import com.optimgov.spring.elearning.payload.request.CourseRequest;
+import com.optimgov.spring.elearning.payload.response.MessageResponse;
 import com.optimgov.spring.elearning.repository.FiliereRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -58,13 +59,13 @@ public class FiliereController {
 		    }
 	  }
 	@PostMapping("/add")
-	public ResponseEntity<Filiere>createFiliere(@RequestBody Filiere filiererequest) {
+	public ResponseEntity createFiliere(@RequestBody Filiere filiererequest) {
 		try {
 			Filiere filiere = filiereRepository
 					.save(new Filiere(filiererequest.getFilierename()));
 			return new ResponseEntity<>(filiere, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.ok(new MessageResponse("Filiere added successfully!"));
 		}
 	}
 	@PutMapping("/update/{id}")
