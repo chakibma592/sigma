@@ -40,7 +40,7 @@ public class ModuleController {
 		}
 	}
 	@PostMapping("/add")
-	public ResponseEntity createModule(@RequestBody ModuleRequest modulerequest) {
+	public ResponseEntity<?>  createModule(@RequestBody ModuleRequest modulerequest) {
 		try {
 			
 			Optional<Filiere> optionnalfiliere= filiereRepository.findById(modulerequest.getFiliereid());

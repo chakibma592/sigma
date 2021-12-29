@@ -59,7 +59,7 @@ public class FiliereController {
 		    }
 	  }
 	@PostMapping("/add")
-	public ResponseEntity createFiliere(@RequestBody Filiere filiererequest) {
+	public ResponseEntity<?>  createFiliere(@RequestBody Filiere filiererequest) {
 		try {
 			Filiere filiere = filiereRepository
 					.save(new Filiere(filiererequest.getFilierename()));
