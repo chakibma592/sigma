@@ -50,9 +50,9 @@ public class ElementController {
 			Module module=optionnalmodule.get();
 			ElementModule element = elementRepository
 					.save(new ElementModule(elementrequest.getElementname(),module));
-			return new ResponseEntity<>(element, HttpStatus.CREATED);
-		} catch (Exception e) {
 			return ResponseEntity.ok(new MessageResponse("Element added successfully!"));
+		} catch (Exception e) {
+			return ResponseEntity.ok(new MessageResponse("Element not added!"));
 		}
 	}
 	@PutMapping("/update/{id}")

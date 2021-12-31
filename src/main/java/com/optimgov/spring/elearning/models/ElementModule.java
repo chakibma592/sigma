@@ -1,5 +1,7 @@
 package com.optimgov.spring.elearning.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,7 +18,11 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(	name = "elements")
-public class ElementModule {
+public class ElementModule implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

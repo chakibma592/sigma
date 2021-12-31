@@ -47,9 +47,9 @@ public class ModuleController {
 			Filiere filiere=optionnalfiliere.get();
 			Module module = moduleRepository
 					.save(new Module(modulerequest.getModulename(),filiere));
-			return new ResponseEntity<>(module, HttpStatus.CREATED);
-		} catch (Exception e) {
 			return ResponseEntity.ok(new MessageResponse("Module added successfully!"));
+		} catch (Exception e) {
+			return ResponseEntity.ok(new MessageResponse("Module not added!"));
 		}
 	}
 	@PutMapping("/update/{id}")

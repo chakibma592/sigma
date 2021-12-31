@@ -11,8 +11,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(	name = "filieres")
-public class Filiere implements Serializable {
+@Table(	name = "semestres")
+public class Semestre implements Serializable {
 	/**
 	 * 
 	 */
@@ -22,25 +22,31 @@ public class Filiere implements Serializable {
 	private Long id;
 	@NotBlank
 	@Size(max = 200)
-	private String filierename;
+	private String semetername;
+	public Semestre(Long id, @NotBlank @Size(max = 200) String semetername) {
+		super();
+		this.id = id;
+		this.semetername = semetername;
+	}
+	public Semestre() {
+		super();
+	}
+	
+	public Semestre(@NotBlank @Size(max = 200) String semetername) {
+		super();
+		this.semetername = semetername;
+	}
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getFilierename() {
-		return filierename;
+	public String getSemetername() {
+		return semetername;
 	}
-	public void setFilierename(String filierename) {
-		this.filierename = filierename;
-	}
-	public Filiere() {
-		super();
-	}
-	public Filiere(@NotBlank @Size(max = 200) String filierename) {
-		super();
-		this.filierename = filierename;
+	public void setSemetername(String semetername) {
+		this.semetername = semetername;
 	}
 	
 }
