@@ -22,19 +22,19 @@ public class Semestre implements Serializable {
 	private Long id;
 	@NotBlank
 	@Size(max = 200)
-	private String semetername;
-	public Semestre(Long id, @NotBlank @Size(max = 200) String semetername) {
+	private String semestername;
+	public Semestre(Long id, @NotBlank @Size(max = 200) String semestername) {
 		super();
 		this.id = id;
-		this.semetername = semetername;
+		this.semestername = semestername;
 	}
 	public Semestre() {
 		super();
 	}
 	
-	public Semestre(@NotBlank @Size(max = 200) String semetername) {
+	public Semestre(@NotBlank @Size(max = 200) String semestername) {
 		super();
-		this.semetername = semetername;
+		this.semestername = semestername;
 	}
 	public Long getId() {
 		return id;
@@ -42,11 +42,11 @@ public class Semestre implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getSemetername() {
-		return semetername;
+	public String getSemestername() {
+		return semestername;
 	}
-	public void setSemetername(String semetername) {
-		this.semetername = semetername;
+	public void setSemestername(String semestername) {
+		this.semestername = semestername;
 	}
 	
 }

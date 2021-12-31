@@ -58,7 +58,7 @@ public class SemstreController {
 	public ResponseEntity<?>  createSemestre(@RequestBody Semestre semestrerequest) {
 		try {
 			Semestre semestre = semestreRepository
-					.save(new Semestre(semestrerequest.getSemetername()));
+					.save(new Semestre(semestrerequest.getSemestername()));
 			return ResponseEntity.ok(new MessageResponse("Semester added succesfully!"));
 		} catch (Exception e) {
 			return ResponseEntity.ok(new MessageResponse("Semester not added!"));
@@ -70,7 +70,7 @@ public class SemstreController {
 
 		if (semestreData.isPresent()) {
 			Semestre semestre = semestreData.get();
-			semestre.setSemetername(semestrerequest.getSemetername());
+			semestre.setSemestername(semestrerequest.getSemestername());
 			
 			
 			
