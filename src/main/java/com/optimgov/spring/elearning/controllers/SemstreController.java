@@ -16,15 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.optimgov.spring.elearning.models.Filiere;
+
 import com.optimgov.spring.elearning.models.Semestre;
 import com.optimgov.spring.elearning.payload.response.MessageResponse;
-import com.optimgov.spring.elearning.repository.FiliereRepository;
 import com.optimgov.spring.elearning.repository.SemestreRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/Semestres")
+@RequestMapping("/api/semestres")
 public class SemstreController {
 	@Autowired
     private SemestreRepository semestreRepository;
