@@ -12,7 +12,7 @@ import com.optimgov.spring.elearning.models.Student;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>{
 	 Optional<Student> findByUsername(String username);
-	  Boolean existsByUsername(String username);
+	  Boolean existsByNumappogee(String numappogee);
 	  Boolean existsByEmail(String email);
 	  @Query("SELECT u FROM Student u where u.id = :identity")
 	  Student findByStudentId(@Param(value="identity")Long id);
