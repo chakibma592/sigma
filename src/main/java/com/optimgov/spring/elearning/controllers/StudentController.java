@@ -71,12 +71,6 @@ public class StudentController {
 	@PostMapping("/add")
 	public ResponseEntity<?> addStudent(@Valid @RequestBody StudentRequest studentRequest) {
 		
-		if (studentRepository.existsByNumappogee(studentRequest.getNumappogee())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Numappogee is already taken!"));
-		}
-
 		if (studentRepository.existsByEmail(studentRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
@@ -93,8 +87,8 @@ public class StudentController {
 		roles.add(userRole);
 		student= new Student();
 		student.setRoles(roles);
-		student.setUsername(studentRequest.getNumappogee());
-		student.setPassword( encoder.encode(studentRequest.getNumappogee()));
+		student.setUsername(studentRequest.getEmail());
+		student.setPassword( encoder.encode(studentRequest.getFirstname()+studentRequest.getLastname()));
 		student.setEmail(studentRequest.getEmail());
 		student.setRoles(roles);
 		student.setFirstname(studentRequest.getFirstname());
