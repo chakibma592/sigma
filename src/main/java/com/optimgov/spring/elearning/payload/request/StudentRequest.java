@@ -23,10 +23,9 @@ public class StudentRequest {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-	public StudentRequest(String username, String firstname, String lastname, @Email String email, String numappogee,
+	public StudentRequest(String firstname, String lastname, @Email String email, String numappogee,
 			long filiereid, Date birthday) {
 		super();
-		this.username = username;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
