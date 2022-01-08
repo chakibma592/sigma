@@ -70,7 +70,22 @@ public class StudentController {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
 	  }
-	
+	@GetMapping("/findstudent/{id}")
+	//@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<Student>getStudent(@PathVariable("id") long id) {
+		 try {
+			 Student student = new Student();
+			 Optional<Student> optionalStudent  = studentRepository.findById(id);
+			 student=optionalStudent.get();
+			// if (student.isEmpty()) {
+			   //     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			   //   }
+
+			      return new ResponseEntity<>(student, HttpStatus.OK);
+		    } catch (Exception e) {
+		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+	  }
 	@PostMapping("/add")
 	public ResponseEntity<?> addStudent(@Valid @RequestBody StudentRequest studentRequest) {
 		
