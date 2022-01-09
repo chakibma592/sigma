@@ -7,7 +7,8 @@ import javax.validation.constraints.Email;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class StudentRequest {
-	private String username;	
+	private String username;
+	private Long id;
 	private String firstname;	
 	private String lastname;
 	@Email
@@ -81,6 +82,12 @@ public class StudentRequest {
 	}
 	public StudentRequest() {
 		super();
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

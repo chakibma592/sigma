@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -123,6 +124,25 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	@PutMapping("/update")
+	public ResponseEntity<Student> updateStudent(@RequestBody StudentRequest studentrequest) {
+		Optional<Student> studentData = studentRepository.findById(studentrequest.getId());
+
+		if (studentData.isPresent()) {
+			Student student= studentData.get();
+			student.setFirstname(studentrequest.getFirstname());
+			student.setLastname(studentrequest.getLastname());
+			student.setBirthday(studentrequest.getBirthday());
+			student.setEmail(studentrequest.getEmail());
+			Optional<Filiere> optionnalfiliere= filiereRepository.findById(studentrequest.getFiliereid());
+			Filiere filiere=optionnalfiliere.get();
+			student.setFiliere(filiere);
+			student.setEmail(studentrequest.getEmail());
+			return new ResponseEntity<>(studentRepository.save(student), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }
