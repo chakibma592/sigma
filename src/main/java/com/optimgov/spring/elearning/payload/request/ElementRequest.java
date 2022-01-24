@@ -4,6 +4,14 @@ public class ElementRequest {
 	private Long id;
 	private String elementname;
 	private long moduleid;
+	private long teacherid;
+	
+	public long getTeacherid() {
+		return teacherid;
+	}
+	public void setTeacherid(long teacherid) {
+		this.teacherid = teacherid;
+	}
 	public Long getId() {
 		return id;
 	}

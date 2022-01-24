@@ -33,6 +33,10 @@ public class ElementModule implements Serializable{
 	@JoinColumn(name = "moduleid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Module module;
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "teacherid", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Teacher teacher;
 	public Long getId() {
 		return id;
 	}
@@ -59,6 +63,19 @@ public class ElementModule implements Serializable{
 	}
 	public ElementModule() {
 		super();
+	}
+	public Teacher getTeacher() {
+		return teacher;
+	}
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+	public ElementModule( @NotBlank @Size(max = 200) String elementname, Module module, Teacher teacher) {
+		super();
+		
+		this.elementname = elementname;
+		this.module = module;
+		this.teacher = teacher;
 	}
 	
 }

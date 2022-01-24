@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.optimgov.spring.elearning.models.ElementModule;
 import com.optimgov.spring.elearning.models.Filiere;
 import com.optimgov.spring.elearning.models.Module;
+import com.optimgov.spring.elearning.models.Teacher;
 import com.optimgov.spring.elearning.payload.request.ElementRequest;
 import com.optimgov.spring.elearning.payload.request.ModuleRequest;
 import com.optimgov.spring.elearning.payload.response.MessageResponse;
 import com.optimgov.spring.elearning.repository.ElementRepositoy;
 import com.optimgov.spring.elearning.repository.FiliereRepository;
 import com.optimgov.spring.elearning.repository.ModuleRepository;
+import com.optimgov.spring.elearning.repository.TeacherRepository;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/elements")
@@ -33,6 +35,8 @@ public class ElementController {
     private ModuleRepository moduleRepository;
 	@Autowired
     private ElementRepositoy elementRepository;
+	@Autowired
+    private TeacherRepository teacherRepository;
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<HttpStatus> deleteelement(@PathVariable("id") long id) {
 		try {
@@ -43,13 +47,16 @@ public class ElementController {
 		}
 	}
 	@PostMapping("/add")
-	public ResponseEntity<?>  createModule(@RequestBody ElementRequest elementrequest) {
+	public ResponseEntity<?>  createElement(@RequestBody ElementRequest elementrequest) {
 		try {
 			
 			Optional<Module> optionnalmodule= moduleRepository.findById(elementrequest.getModuleid());
 			Module module=optionnalmodule.get();
+			Optional<Teacher> optionnalteacher= teacherRepository.findById(elementrequest.getTeacherid());
+			Teacher teacher=optionnalteacher.get();
+			
 			ElementModule element = elementRepository
-					.save(new ElementModule(elementrequest.getElementname(),module));
+					.save(new ElementModule(elementrequest.getElementname(),module,teacher));
 			return ResponseEntity.ok(new MessageResponse("Element added successfully!"));
 		} catch (Exception e) {
 			return ResponseEntity.ok(new MessageResponse("Element not added!"));
@@ -62,9 +69,26 @@ public class ElementController {
 		if (elementData.isPresent()) {
 			ElementModule element = elementData.get();
 			element.setElementname(elementrequest.getElementname());
-			Optional<Module> optionnalmodule= moduleRepository.findById(elementrequest.getModuleid());
-			Module module=optionnalmodule.get();
-			element.setModule(module);
+			Optional<Teacher> optionnalteacher= teacherRepository.findById(elementrequest.getTeacherid());
+			Teacher teacher=optionnalteacher.get();
+			element.setTeacher(teacher);
+			
+			
+			return new ResponseEntity<>(elementRepository.save(element), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	@PutMapping("/updateTeacher/{id}")
+	public ResponseEntity<ElementModule> updateElementTeacher(@PathVariable("id") long id,@RequestBody ElementRequest elementrequest) {
+		Optional<ElementModule> elementData = elementRepository.findById(id);
+
+		if (elementData.isPresent()) {
+			ElementModule element = elementData.get();
+			
+			Optional<Teacher> optionnalteaher= teacherRepository.findById(elementrequest.getTeacherid());
+			Teacher teacher=optionnalteaher.get();
+			element.setTeacher(teacher);
 			
 			
 			return new ResponseEntity<>(elementRepository.save(element), HttpStatus.OK);

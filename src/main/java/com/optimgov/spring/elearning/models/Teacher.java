@@ -12,6 +12,7 @@ public class Teacher extends User implements Serializable{
 	private static final long serialVersionUID = 1L;
 @Column(nullable=true)
 private String biographie;
+private String numtph;
 
 public Teacher(String biographie) {
 	super();
