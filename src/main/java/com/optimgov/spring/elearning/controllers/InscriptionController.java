@@ -1,5 +1,6 @@
 package com.optimgov.spring.elearning.controllers;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -73,9 +75,9 @@ public class InscriptionController {
 			}*/
 			Inscription inscription = inscriptionRepository
 					.save(new Inscription(student,annee,semestre,EObservation.En_cours));
-			return ResponseEntity.ok(new MessageResponse("Element added successfully!"));
+			return ResponseEntity.ok(new MessageResponse("Inscription added successfully!"));
 		} catch (Exception e) {
-			return ResponseEntity.ok(new MessageResponse("Element not added!"));
+			return ResponseEntity.ok(new MessageResponse("Inscription not added!"));
 		}
 	}
 	@PutMapping("/updateObservation")
@@ -101,5 +103,20 @@ public class InscriptionController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+	@GetMapping("/encours/{id}")
+	public ResponseEntity<Inscription>getAnneeEnCours(@PathVariable("id") String id) {
+		 try {
+			 Inscription inscription = new Inscription();
+
+		      if (id != null)
+		        
+		     inscription =   inscriptionRepository.findInscriptionEnCoursByStudent(Long.parseLong(id));
+
+		     
+
+		      return new ResponseEntity<>(inscription, HttpStatus.OK);
+		    } catch (Exception e) {
+		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+	  }
 }

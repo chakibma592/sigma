@@ -11,6 +11,7 @@ import com.optimgov.spring.elearning.models.Inscription;
 
 @Repository
 public interface InscriptionRepository extends JpaRepository<Inscription, Long>{
-	@Query("SELECT l  FROM Inscription l where l.student.id = :identity")
-	ArrayList<Inscription> findModuleByStudent(@Param(value="identity")Long id);
+	
+	@Query("SELECT l  FROM Inscription l where l.student.id = :identity AND l.observation= 'En_cours'")
+	Inscription findInscriptionEnCoursByStudent(@Param(value="identity")Long id);
 }
