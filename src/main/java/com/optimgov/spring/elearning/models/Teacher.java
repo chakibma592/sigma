@@ -10,14 +10,9 @@ public class Teacher extends User implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-@Column(nullable=true)
-private String biographie;
+
 private String numtph;
 
-public Teacher(String biographie) {
-	super();
-	this.biographie = biographie;
-}
 
 
 public Teacher() {
@@ -25,13 +20,25 @@ public Teacher() {
 }
 
 
-public String getBiographie() {
-	return biographie;
+
+public String getNumtph() {
+	return numtph;
 }
 
-public void setBiographie(String biographie) {
-	this.biographie = biographie;
+
+
+public void setNumtph(String numtph) {
+	this.numtph = numtph;
 }
+
+
+
+public Teacher(String numtph) {
+	super();
+	this.numtph = numtph;
+}
+
+
 
 
 }
