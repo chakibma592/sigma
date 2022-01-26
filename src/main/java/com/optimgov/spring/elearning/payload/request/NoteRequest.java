@@ -54,5 +54,22 @@ public class NoteRequest {
 	public NoteRequest() {
 		super();
 	}
+	public NoteRequest(Long id, double note, long studentid, long semestreid, long anneeid, long elementid) {
+		super();
+		this.id = id;
+		this.note = note;
+		this.studentid = studentid;
+		this.semestreid = semestreid;
+		this.anneeid = anneeid;
+		this.elementid = elementid;
+	}
+	public NoteRequest(double note, long studentid, long semestreid, long anneeid, long elementid) {
+		super();
+		this.note = note;
+		this.studentid = studentid;
+		this.semestreid = semestreid;
+		this.anneeid = anneeid;
+		this.elementid = elementid;
+	}
 	
 }
