@@ -49,7 +49,7 @@ public class NoteController {
 			Student student=optionnalstudent.get();
 			Optional<Semestre> optionnalsemestre= semestreRepository.findById(noterequest.getSemestreid());
 			Semestre semestre=optionnalsemestre.get();
-			Optional<AnneeUniversitaire> optionnalannee= anneeRepository.findById(noterequest.getSemestreid());
+			Optional<AnneeUniversitaire> optionnalannee= anneeRepository.findById(noterequest.getAnneeid());
 			AnneeUniversitaire annee=optionnalannee.get();
 			Optional<ElementModule> optionnalelement= elementRepository.findById(noterequest.getElementid());
 			ElementModule element=optionnalelement.get();
