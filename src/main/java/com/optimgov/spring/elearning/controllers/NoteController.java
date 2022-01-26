@@ -22,6 +22,7 @@ import com.optimgov.spring.elearning.models.Semestre;
 import com.optimgov.spring.elearning.models.Student;
 import com.optimgov.spring.elearning.payload.request.NoteRequest;
 import com.optimgov.spring.elearning.payload.response.MessageResponse;
+import com.optimgov.spring.elearning.payload.response.Nota;
 import com.optimgov.spring.elearning.repository.AnneeUniversitaireRepository;
 import com.optimgov.spring.elearning.repository.ElementRepositoy;
 import com.optimgov.spring.elearning.repository.InscriptionRepository;
@@ -73,20 +74,21 @@ public class NoteController {
 		}
 	}
 	@GetMapping("/bulletin/{id}")
-	public ResponseEntity<ArrayList<Note>>getNotesByStudent(@PathVariable("id") String id) {
+	public ResponseEntity<ArrayList<Nota>>getNotesByStudent(@PathVariable("id") String id) {
 		 try {
 			 //Liste des notes
 			 ArrayList<Note> notes = new ArrayList<Note>();
+			 ArrayList<Nota> notas = new ArrayList<Nota>();
 			 Inscription inscription= new Inscription();
 			 if (id != null)
 				  inscription=inscriptionRepository.findInscriptionEnCoursByStudent(Long.parseLong(id));
 		          noteRepository.findByStudentId(Long.parseLong(id),inscription.getAnnee().getId(),inscription.getSemestre().getId()).forEach(notes::add);
-		      
-		      if (notes.isEmpty()) {
+
+		      if (notas.isEmpty()) {
 		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		      }
-
-		      return new ResponseEntity<>(notes, HttpStatus.OK);
+      
+		      return new ResponseEntity<>(notas, HttpStatus.OK);
 		    } catch (Exception e) {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
