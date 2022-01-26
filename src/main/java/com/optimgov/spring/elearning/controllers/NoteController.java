@@ -57,7 +57,7 @@ public class NoteController {
 					.save(new Note(noterequest.getNote(),student,semestre,annee,element));
 			return ResponseEntity.ok(new MessageResponse("Mark added successfully!"));
 		} catch (Exception e) {
-			return ResponseEntity.ok(new MessageResponse("Mark not added!"));
+			return ResponseEntity.ok(new MessageResponse(e.getStackTrace().toString()));
 		}
 	}
 }
