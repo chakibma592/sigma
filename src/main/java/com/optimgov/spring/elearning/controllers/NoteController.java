@@ -44,6 +44,7 @@ public class NoteController {
 	@PostMapping("/add")
 	public ResponseEntity<?>  createNote(@RequestBody NoteRequest noterequest) {
 		String text="";
+		text=noterequest.toString();
 		try {
 			
 			Optional<Student> optionnalstudent= studentRepository.findById(noterequest.getStudentid());
@@ -54,7 +55,7 @@ public class NoteController {
 			AnneeUniversitaire annee=optionnalannee.get();
 			Optional<ElementModule> optionnalelement= elementRepository.findById(noterequest.getElementid());
 			ElementModule element=optionnalelement.get();
-			text=noterequest.toString();
+			
 			Note note = noteRepository
 					.save(new Note(noterequest.getNote(),student,semestre,annee,element));
 			return ResponseEntity.ok(new MessageResponse("Mark added successfully!"));
