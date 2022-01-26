@@ -56,9 +56,9 @@ public class NoteController {
 			Optional<AnneeUniversitaire> optionnalannee= anneeRepository.findById(noterequest.getAnneeid());
 			if(optionnalannee.isPresent()) text=text+" Annee";
 			AnneeUniversitaire annee=optionnalannee.get();
-			Optional<ElementModule> optionnalelement= elementRepository.findById(noterequest.getElementid());
-			if(optionnalelement.isPresent()) text=text+" element";
-			ElementModule element=optionnalelement.get();
+			Optional<ElementModule> elementData = elementRepository.findById(noterequest.getElementid());
+			if(elementData.isPresent()) text=text+" element";
+			ElementModule element=elementData.get();
 			
 			Note note = noteRepository
 					.save(new Note(noterequest.getNote(),student,semestre,annee,element));
