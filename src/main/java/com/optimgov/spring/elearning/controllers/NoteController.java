@@ -1,7 +1,6 @@
 package com.optimgov.spring.elearning.controllers;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,7 @@ import com.optimgov.spring.elearning.models.Note;
 import com.optimgov.spring.elearning.models.Semestre;
 import com.optimgov.spring.elearning.models.Student;
 import com.optimgov.spring.elearning.payload.request.NoteRequest;
-import com.optimgov.spring.elearning.payload.response.ElementResponse;
 import com.optimgov.spring.elearning.payload.response.MessageResponse;
-import com.optimgov.spring.elearning.payload.response.NoteResponse;
 import com.optimgov.spring.elearning.repository.AnneeUniversitaireRepository;
 import com.optimgov.spring.elearning.repository.ElementRepositoy;
 import com.optimgov.spring.elearning.repository.InscriptionRepository;
@@ -76,7 +73,7 @@ public class NoteController {
 		}
 	}
 	@GetMapping("/bulletin/{id}")
-	public ResponseEntity<ArrayList<NoteResponse>>getNotesByStudent(@PathVariable("id") String id) {
+	public ResponseEntity<ArrayList<Note>>getNotesByStudent(@PathVariable("id") String id) {
 		 try {
 			 //Liste des notes
 			 ArrayList<Note> notes = new ArrayList<Note>();
@@ -88,27 +85,8 @@ public class NoteController {
 		      if (notes.isEmpty()) {
 		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		      }
-             ArrayList<NoteResponse> notesresponses=new ArrayList<NoteResponse>();
-             Iterator it=notes.iterator();            
-             NoteResponse not=new NoteResponse();
-             String lastmodule="";
-             while(it.hasNext()) {
-            	 Note n=(Note)it.next();  
-            	 ElementResponse e=new ElementResponse();
-            	 e.setElementname(n.getElement().getElementname());
-            	 e.setNote(n.getNote());
-            	 if(!n.getElement().getModule().getModulename().equals(lastmodule)) {
-            		 notesresponses.add(not);
-            		 not=new NoteResponse();
-            		 not.setModulename(n.getElement().getModule().getModulename());
-            		 not.getElement().add(e);
-            	 }else {
-            		 not.getElement().add(e);
-            	 }
-            	 lastmodule=n.getElement().getModule().getModulename();
-            	 
-             }
-		      return new ResponseEntity<>(notesresponses, HttpStatus.OK);
+
+		      return new ResponseEntity<>(notes, HttpStatus.OK);
 		    } catch (Exception e) {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
