@@ -71,5 +71,10 @@ public class NoteRequest {
 		this.anneeid = anneeid;
 		this.elementid = elementid;
 	}
+	@Override
+	public String toString() {
+		return "NoteRequest [note=" + note + ", studentid=" + studentid + ", semestreid=" + semestreid + ", anneeid="
+				+ anneeid + ", elementid=" + elementid + "]";
+	}
 	
 }
