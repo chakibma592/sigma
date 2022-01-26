@@ -3,7 +3,7 @@ package com.optimgov.spring.elearning.payload.response;
 public class Nota {
 private String modulename;
 private String elementname;
-private long note;
+private double note;
 public String getModulename() {
 	return modulename;
 }
@@ -16,13 +16,13 @@ public String getElementname() {
 public void setElementname(String elementname) {
 	this.elementname = elementname;
 }
-public long getNote() {
+public double getNote() {
 	return note;
 }
-public void setNote(long note) {
+public void setNote(double note) {
 	this.note = note;
 }
-public Nota(String modulename, String elementname, long note) {
+public Nota(String modulename, String elementname, double note) {
 	super();
 	this.modulename = modulename;
 	this.elementname = elementname;

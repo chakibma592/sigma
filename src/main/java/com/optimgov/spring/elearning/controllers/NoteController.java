@@ -87,7 +87,9 @@ public class NoteController {
 		      if (notas.isEmpty()) {
 		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		      }
-      
+		      for(Note n : notes) {
+		    	  notas.add(new Nota(n.getElement().getModule().getModulename(),n.getElement().getElementname(),n.getNote()));
+		      }
 		      return new ResponseEntity<>(notas, HttpStatus.OK);
 		    } catch (Exception e) {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
