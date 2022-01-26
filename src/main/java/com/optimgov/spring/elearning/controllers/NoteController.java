@@ -44,16 +44,20 @@ public class NoteController {
 	@PostMapping("/add")
 	public ResponseEntity<?>  createNote(@RequestBody NoteRequest noterequest) {
 		String text="";
-		text=noterequest.toString();
+		//text=noterequest.toString();
 		try {
 			
 			Optional<Student> optionnalstudent= studentRepository.findById(noterequest.getStudentid());
+			if(optionnalstudent.isPresent()) text=text+"Student";
 			Student student=optionnalstudent.get();
 			Optional<Semestre> optionnalsemestre= semestreRepository.findById(noterequest.getSemestreid());
+			if(optionnalsemestre.isPresent()) text=text+" Semestre";
 			Semestre semestre=optionnalsemestre.get();
 			Optional<AnneeUniversitaire> optionnalannee= anneeRepository.findById(noterequest.getAnneeid());
+			if(optionnalannee.isPresent()) text=text+" Annee";
 			AnneeUniversitaire annee=optionnalannee.get();
 			Optional<ElementModule> optionnalelement= elementRepository.findById(noterequest.getElementid());
+			if(optionnalelement.isPresent()) text=text+" element";
 			ElementModule element=optionnalelement.get();
 			
 			Note note = noteRepository
