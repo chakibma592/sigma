@@ -79,8 +79,8 @@ public class NoteController {
 			 ArrayList<Note> notes = new ArrayList<Note>();
 			 Inscription inscription= new Inscription();
 			 if (id != null)
-				 inscription=inscriptionRepository.findInscriptionEnCoursByStudent(Long.parseLong(id));
-		          noteRepository.findByStudentId(Long.parseLong(id),inscription.getAnnee(),inscription.getSemestre()).forEach(notes::add);
+				  inscription=inscriptionRepository.findInscriptionEnCoursByStudent(Long.parseLong(id));
+		          noteRepository.findByStudentId(Long.parseLong(id),inscription.getAnnee().getId(),inscription.getSemestre().getId()).forEach(notes::add);
 		      
 		      if (notes.isEmpty()) {
 		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);

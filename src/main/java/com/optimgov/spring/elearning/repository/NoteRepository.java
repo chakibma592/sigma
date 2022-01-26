@@ -15,7 +15,7 @@ import com.optimgov.spring.elearning.models.Semestre;
 public interface NoteRepository extends JpaRepository<Note, Long>{
 	@Query("SELECT c FROM Note c where c.id = :identity")
 	Note findByNoteId(@Param(value="identity")Long id);
-	@Query("SELECT c FROM Note c where c.studentid = :identity AND c.annee= :annee AND c.semestre= :semestre")
-	ArrayList<Note>findByStudentId(@Param(value="identity")Long id, @Param(value="annee")AnneeUniversitaire annee, @Param(value="semestre")Semestre semestre);
+	@Query("SELECT c FROM Note c where c.student.id = :identity AND c.annee.id= :annee AND c.semestre.id = :semestre")
+	ArrayList<Note>findByStudentId(@Param(value="identity")Long id, @Param(value="annee")Long annee, @Param(value="semestre")Long semestre);
 
 }
