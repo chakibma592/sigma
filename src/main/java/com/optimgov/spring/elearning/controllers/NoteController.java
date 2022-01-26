@@ -75,6 +75,7 @@ public class NoteController {
 	@GetMapping("/bulletin/{id}")
 	public ResponseEntity<ArrayList<Note>>getNotesByStudent(@PathVariable("id") String id) {
 		 try {
+			 //Liste des notes
 			 ArrayList<Note> notes = new ArrayList<Note>();
 			 Inscription inscription= new Inscription();
 			 if (id != null)
