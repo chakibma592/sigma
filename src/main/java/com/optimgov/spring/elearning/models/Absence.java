@@ -45,6 +45,7 @@ public class Absence implements Serializable{
 	@JoinColumn(name = "anneeid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private AnneeUniversitaire annee;
+	
 	public Long getId() {
 		return id;
 	}

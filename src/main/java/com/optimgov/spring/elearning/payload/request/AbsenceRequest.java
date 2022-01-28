@@ -6,6 +6,8 @@ public class AbsenceRequest {
 	private Long id;
 	private int nombreheures;
 	private long studentid;
+	private long semestreid;
+	private long anneeid;
 	private Date dateabsence;
 	public Long getId() {
 		return id;
@@ -40,6 +42,27 @@ public class AbsenceRequest {
 	}
 	public AbsenceRequest() {
 		super();
+	}
+	public long getSemestreid() {
+		return semestreid;
+	}
+	public void setSemestreid(long semestreid) {
+		this.semestreid = semestreid;
+	}
+	public long getAnneeid() {
+		return anneeid;
+	}
+	public void setAnneeid(long anneeid) {
+		this.anneeid = anneeid;
+	}
+	public AbsenceRequest(Long id, int nombreheures, long studentid, long semestreid, long anneeid, Date dateabsence) {
+		super();
+		this.id = id;
+		this.nombreheures = nombreheures;
+		this.studentid = studentid;
+		this.semestreid = semestreid;
+		this.anneeid = anneeid;
+		this.dateabsence = dateabsence;
 	}
 	
 }
