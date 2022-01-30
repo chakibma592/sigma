@@ -42,6 +42,7 @@ public class Note implements Serializable{
 	@JoinColumn(name = "elementid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ElementModule element;
+	private String observation;
 	public Long getId() {
 		return id;
 	}
@@ -98,6 +99,22 @@ public class Note implements Serializable{
 		this.semestre = semestre;
 		this.annee = annee;
 		this.element = element;
+	}
+	public String getObservation() {
+		return observation;
+	}
+	public void setObservation(String observation) {
+		this.observation = observation;
+	}
+	public Note(double note, Student student, Semestre semestre, AnneeUniversitaire annee, ElementModule element,
+			String observation) {
+		super();
+		this.note = note;
+		this.student = student;
+		this.semestre = semestre;
+		this.annee = annee;
+		this.element = element;
+		this.observation = observation;
 	}
 	
 	

@@ -3,6 +3,7 @@ package com.optimgov.spring.elearning.payload.response;
 public class Nota {
 private String modulename;
 private String elementname;
+private String observation;
 private double note;
 public String getModulename() {
 	return modulename;
@@ -32,4 +33,18 @@ public Nota() {
 	super();
 	
 }
+public String getObservation() {
+	return observation;
+}
+public void setObservation(String observation) {
+	this.observation = observation;
+}
+public Nota(String modulename, String elementname, String observation, double note) {
+	super();
+	this.modulename = modulename;
+	this.elementname = elementname;
+	this.observation = observation;
+	this.note = note;
+}
+
 }

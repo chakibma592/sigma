@@ -29,9 +29,7 @@ import com.optimgov.spring.elearning.payload.response.MessageResponse;
 import com.optimgov.spring.elearning.payload.response.Nota;
 import com.optimgov.spring.elearning.repository.AbsenceRepository;
 import com.optimgov.spring.elearning.repository.AnneeUniversitaireRepository;
-import com.optimgov.spring.elearning.repository.ElementRepositoy;
 import com.optimgov.spring.elearning.repository.InscriptionRepository;
-import com.optimgov.spring.elearning.repository.NoteRepository;
 import com.optimgov.spring.elearning.repository.SemestreRepository;
 import com.optimgov.spring.elearning.repository.StudentRepository;
 

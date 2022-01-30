@@ -88,9 +88,31 @@ public class NoteController {
 		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		      }
 		      for(Note n : notes) {
-		    	  notas.add(new Nota(n.getElement().getModule().getModulename(),n.getElement().getElementname(),n.getNote()));
+		    	  notas.add(new Nota(n.getElement().getModule().getModulename(),n.getElement().getElementname(),n.getObservation(),n.getNote()));
 		      }
 		      return new ResponseEntity<>(notas, HttpStatus.OK);
+		    } catch (Exception e) {
+		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+	  }
+	@GetMapping("/moyenne/{id}")
+	public ResponseEntity<String>getMoyenneByStudent(@PathVariable("id") String id) {
+		 try {
+			 //Liste des notes
+			 ArrayList<Note> notes = new ArrayList<Note>();
+			 Inscription inscription= new Inscription();
+			 double moyenne=0.0;
+			 if (id != null)
+				  inscription=inscriptionRepository.findInscriptionEnCoursByStudent(Long.parseLong(id));
+		          noteRepository.findByStudentId(Long.parseLong(id),inscription.getAnnee().getId(),inscription.getSemestre().getId()).forEach(notes::add);
+
+		      if (notes.isEmpty()) {
+		        return new ResponseEntity<>(""+moyenne, HttpStatus.OK);
+		      }
+		      for(Note n : notes) {
+		    	moyenne+=(n.getNote()/notes.size() ); 
+		      }
+		      return new ResponseEntity<>(""+moyenne, HttpStatus.OK);
 		    } catch (Exception e) {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
