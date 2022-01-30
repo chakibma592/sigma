@@ -1,5 +1,6 @@
 package com.optimgov.spring.elearning.controllers;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -102,6 +103,7 @@ public class NoteController {
 			 ArrayList<Note> notes = new ArrayList<Note>();
 			 Inscription inscription= new Inscription();
 			 double moyenne=0.0;
+			 DecimalFormat df = new DecimalFormat("###.##");
 			 if (id != null)
 				  inscription=inscriptionRepository.findInscriptionEnCoursByStudent(Long.parseLong(id));
 		          noteRepository.findByStudentId(Long.parseLong(id),inscription.getAnnee().getId(),inscription.getSemestre().getId()).forEach(notes::add);
@@ -112,7 +114,7 @@ public class NoteController {
 		      for(Note n : notes) {
 		    	moyenne+=(n.getNote()/notes.size() ); 
 		      }
-		      return new ResponseEntity<>(""+moyenne, HttpStatus.OK);
+		      return new ResponseEntity<>(""+df.format(moyenne), HttpStatus.OK);
 		    } catch (Exception e) {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
