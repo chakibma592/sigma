@@ -68,7 +68,7 @@ public class AbsenceController {
 					.save(new Absence(absencerequest.getDateabsence(),absencerequest.getNombreheures(),false,"non justifiéé",student,inscription.getSemestre(),inscription.getAnnee()));
 			return ResponseEntity.ok(new MessageResponse("Mark added successfully!"));
 		} catch (Exception e) {
-			return ResponseEntity.ok(new MessageResponse(text));
+			return ResponseEntity.ok(new MessageResponse("Mark not added!"));
 		}
 	}
 	@GetMapping("/list/{id}")
