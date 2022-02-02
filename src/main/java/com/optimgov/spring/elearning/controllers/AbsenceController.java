@@ -52,6 +52,7 @@ public class AbsenceController {
 		String text="";
 		//text=noterequest.toString();
 		try {
+			Inscription inscription= inscriptionRepository.findInscriptionEnCoursByStudent(absencerequest.getStudentid());
 			
 			Optional<Student> optionnalstudent= studentRepository.findById(absencerequest.getStudentid());
 			//if(optionnalstudent.isPresent()) text=text+"Student";
@@ -64,7 +65,7 @@ public class AbsenceController {
 			
 			
 			Absence absence = absenceRepository
-					.save(new Absence(absencerequest.getDateabsence(),absencerequest.getNombreheures(),false,"non justifiéé",student,semestre,annee));
+					.save(new Absence(absencerequest.getDateabsence(),absencerequest.getNombreheures(),false,"non justifiéé",student,inscription.getSemestre(),inscription.getAnnee()));
 			return ResponseEntity.ok(new MessageResponse("Mark added successfully!"));
 		} catch (Exception e) {
 			return ResponseEntity.ok(new MessageResponse(text));
