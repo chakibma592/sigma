@@ -57,11 +57,7 @@ public class AbsenceController {
 			Optional<Student> optionnalstudent= studentRepository.findById(absencerequest.getStudentid());
 			//if(optionnalstudent.isPresent()) text=text+"Student";
 			Student student=optionnalstudent.get();
-			Optional<Semestre> optionnalsemestre= semestreRepository.findById(absencerequest.getSemestreid());
-			Semestre semestre=optionnalsemestre.get();
-			Optional<AnneeUniversitaire> optionnalannee= anneeRepository.findById(absencerequest.getAnneeid());
-			//if(optionnalannee.isPresent()) text=text+" Annee";
-			AnneeUniversitaire annee=optionnalannee.get();
+			
 			
 			
 			Absence absence = absenceRepository
