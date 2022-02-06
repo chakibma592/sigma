@@ -14,6 +14,7 @@ public class StudentRequest {
 	@Email
 	private String email;
 	private String numappogee ;
+	private String numtph ;
 	private long filiereid ;
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date birthday;
@@ -88,6 +89,12 @@ public class StudentRequest {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getNumtph() {
+		return numtph;
+	}
+	public void setNumtph(String numtph) {
+		this.numtph = numtph;
 	}
 	
 }
