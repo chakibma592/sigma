@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -142,4 +143,21 @@ public class TeacherController {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
 	  }
+	@PutMapping("/update")
+	public ResponseEntity<Teacher> updateTeacher(@RequestBody StudentRequest studentrequest) {
+		Optional<Teacher> studentData = teacherRepository.findById(studentrequest.getId());
+
+		if (studentData.isPresent()) {
+			Teacher student= studentData.get();
+			student.setFirstname(studentrequest.getFirstname());
+			student.setLastname(studentrequest.getLastname());
+			student.setBirthday(studentrequest.getBirthday());
+			student.setEmail(studentrequest.getEmail());
+			student.setNumtph(studentrequest.getNumtph());
+			student.setEmail(studentrequest.getEmail());
+			return new ResponseEntity<>(teacherRepository.save(student), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 }
