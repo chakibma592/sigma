@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.optimgov.spring.elearning.models.ERole;
 import com.optimgov.spring.elearning.models.Filiere;
+import com.optimgov.spring.elearning.models.Note;
 import com.optimgov.spring.elearning.models.Role;
 import com.optimgov.spring.elearning.models.Student;
 import com.optimgov.spring.elearning.models.Teacher;
@@ -98,15 +99,25 @@ public class TeacherController {
 	}
 	@GetMapping("/list")
 	//@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<ArrayList<Teacher>>getStudentsList() {
+	public ResponseEntity<ArrayList<TeacherResponse>>getStudentsList() {
 		 try {
 			 ArrayList<Teacher> teachers = new ArrayList<Teacher>();
+			 ArrayList<TeacherResponse> teachersresponse = new ArrayList<TeacherResponse>();
 			 teacherRepository.findAll().forEach(teachers::add);
 			 if (teachers.isEmpty()) {
 			        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			      }
-
-			      return new ResponseEntity<>(teachers, HttpStatus.OK);
+			 for(Teacher t : teachers) {
+				 TeacherResponse teach= new TeacherResponse();
+				 teach.setId(t.getId());
+				 teach.setBirthday(t.getBirthday());
+				 teach.setEmail(t.getEmail());
+				 teach.setFirstname(t.getFirstname());
+				 teach.setLastname(t.getLastname());
+				 teach.setNumtph(t.getNumtph());
+				 
+			 }
+			      return new ResponseEntity<>(teachersresponse, HttpStatus.OK);
 		    } catch (Exception e) {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
