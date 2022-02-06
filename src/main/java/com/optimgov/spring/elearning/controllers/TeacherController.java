@@ -48,7 +48,6 @@ public class TeacherController {
 	@Autowired
 	AuthenticationManager authenticationManager;
 	@GetMapping("/list1")
-	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<ArrayList<Teacher>>getTeachersList() {
 		 try {
 			 ArrayList<Teacher> teachers = new ArrayList<Teacher>();
