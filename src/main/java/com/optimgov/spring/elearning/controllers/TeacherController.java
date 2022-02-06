@@ -115,7 +115,7 @@ public class TeacherController {
 				 teach.setFirstname(t.getFirstname());
 				 teach.setLastname(t.getLastname());
 				 teach.setNumtph(t.getNumtph());
-				 
+				 teachersresponse.add(teach);
 			 }
 			      return new ResponseEntity<>(teachersresponse, HttpStatus.OK);
 		    } catch (Exception e) {
