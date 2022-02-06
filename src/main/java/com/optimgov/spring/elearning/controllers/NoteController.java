@@ -130,7 +130,7 @@ public class NoteController {
 			 Inscription inscription= new Inscription();
 			 String modulename="";
 			 double notemodule=0.0;
-			 int nbrelement=0;
+			 int nbrelement=0,i=0;
 			// if (id != null)
 				  inscription=inscriptionRepository.findInscriptionEnCoursByStudent(Long.parseLong(id));
 		          noteRepository.findByStudentId(Long.parseLong(id),inscription.getAnnee().getId(),inscription.getSemestre().getId()).forEach(notes::add);
@@ -151,7 +151,11 @@ public class NoteController {
 		    	  notemodule+=n.getNote();
 		    	  ElementResponse elemementrep=new ElementResponse(n.getElement().getElementname(), n.getNote());
 		    	  listelement.add(elemementrep);
+		    	  i++;
 		      }
+		      if(nbrelement!=0)
+	    		  moyenne.add(new NoteResponse(modulename,notemodule/nbrelement,listelement) );
+	    		 
 		      return new ResponseEntity<>(moyenne, HttpStatus.OK);
 		    } catch (Exception e) {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
