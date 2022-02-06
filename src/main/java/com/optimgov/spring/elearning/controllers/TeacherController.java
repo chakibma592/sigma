@@ -92,6 +92,7 @@ public class TeacherController {
 		teacher.setFirstname(studentRequest.getFirstname());
 		teacher.setLastname(studentRequest.getLastname());
 		teacher.setBirthday(studentRequest.getBirthday());
+		teacher.setNumtph(studentRequest.getNumtph());
 		//student.setFiliere(filiere);
 		teacherRepository.save(teacher);		
   		return ResponseEntity.ok(new MessageResponse("Teacher registered successfully!"));
