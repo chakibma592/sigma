@@ -124,17 +124,14 @@ public class NoteController {
 	@GetMapping("/bulletins/{id}")
 	public ResponseEntity <ArrayList<NoteResponse>>getNotesByStudentbyModule(@PathVariable("id") String id) {
 		 try {
-			 //Liste des notes
-			 
 			 ArrayList<Note> notes = new ArrayList<Note>();
 			 ArrayList<NoteResponse> moyenne = new ArrayList<NoteResponse>();
 			 ArrayList<ElementResponse> listelement = new ArrayList<ElementResponse>();
 			 Inscription inscription= new Inscription();
 			 String modulename="";
 			 double notemodule=0.0;
-			 double moyennegenerale=0.0;
 			 int nbrelement=0;
-			 if (id != null)
+			// if (id != null)
 				  inscription=inscriptionRepository.findInscriptionEnCoursByStudent(Long.parseLong(id));
 		          noteRepository.findByStudentId(Long.parseLong(id),inscription.getAnnee().getId(),inscription.getSemestre().getId()).forEach(notes::add);
 
@@ -142,9 +139,9 @@ public class NoteController {
 		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		      }
 		      for(Note n : notes) {
-		    	  if(!modulename.equals(n.getElement().getElementname())) {
-		    	  modulename=n.getElement().getElementname();
-		    	  moyenne.add(new NoteResponse(n.getElement().getModule().getModulename(),notemodule/nbrelement,listelement) );
+		    	  if(!modulename.equals(n.getElement().getModule().getModulename())) {
+		    		  moyenne.add(new NoteResponse(modulename,notemodule/nbrelement,listelement) );
+		    		  modulename=n.getElement().getModule().getModulename();
 		    	  nbrelement=0;
 		    	  notemodule=0;
 		    	  listelement= new ArrayList<ElementResponse>();
