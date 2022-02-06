@@ -22,8 +22,10 @@ import com.optimgov.spring.elearning.models.Note;
 import com.optimgov.spring.elearning.models.Semestre;
 import com.optimgov.spring.elearning.models.Student;
 import com.optimgov.spring.elearning.payload.request.NoteRequest;
+import com.optimgov.spring.elearning.payload.response.ElementResponse;
 import com.optimgov.spring.elearning.payload.response.MessageResponse;
 import com.optimgov.spring.elearning.payload.response.Nota;
+import com.optimgov.spring.elearning.payload.response.NoteResponse;
 import com.optimgov.spring.elearning.repository.AnneeUniversitaireRepository;
 import com.optimgov.spring.elearning.repository.ElementRepositoy;
 import com.optimgov.spring.elearning.repository.InscriptionRepository;
@@ -115,6 +117,44 @@ public class NoteController {
 		    	moyenne+=(n.getNote()/notes.size() ); 
 		      }
 		      return new ResponseEntity<>(""+df.format(moyenne), HttpStatus.OK);
+		    } catch (Exception e) {
+		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+	  }
+	@GetMapping("/bulletins/{id}")
+	public ResponseEntity <ArrayList<NoteResponse>>getNotesByStudentbyModule(@PathVariable("id") String id) {
+		 try {
+			 //Liste des notes
+			 
+			 ArrayList<Note> notes = new ArrayList<Note>();
+			 ArrayList<NoteResponse> moyenne = new ArrayList<NoteResponse>();
+			 ArrayList<ElementResponse> listelement = new ArrayList<ElementResponse>();
+			 Inscription inscription= new Inscription();
+			 String modulename="";
+			 double notemodule=0.0;
+			 double moyennegenerale=0.0;
+			 int nbrelement=0;
+			 if (id != null)
+				  inscription=inscriptionRepository.findInscriptionEnCoursByStudent(Long.parseLong(id));
+		          noteRepository.findByStudentId(Long.parseLong(id),inscription.getAnnee().getId(),inscription.getSemestre().getId()).forEach(notes::add);
+
+		      if (notes.isEmpty()) {
+		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		      }
+		      for(Note n : notes) {
+		    	  if(!modulename.equals(n.getElement().getElementname())) {
+		    	  modulename=n.getElement().getElementname();
+		    	  moyenne.add(new NoteResponse(n.getElement().getModule().getModulename(),notemodule/nbrelement,listelement) );
+		    	  nbrelement=0;
+		    	  notemodule=0;
+		    	  listelement= new ArrayList<ElementResponse>();
+		    	  }
+		    	  nbrelement++;
+		    	  notemodule+=n.getNote();
+		    	  ElementResponse elemementrep=new ElementResponse(n.getElement().getElementname(), n.getNote());
+		    	  listelement.add(elemementrep);
+		      }
+		      return new ResponseEntity<>(moyenne, HttpStatus.OK);
 		    } catch (Exception e) {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		    }

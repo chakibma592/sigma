@@ -15,7 +15,7 @@ public double getNote() {
 public void setNote(double note) {
 	this.note = note;
 }
-public ElementResponse(String elementname, long note) {
+public ElementResponse(String elementname, double note) {
 	super();
 	this.elementname = elementname;
 	this.note = note;

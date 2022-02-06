@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class NoteResponse {
 private String modulename;
-private long moyennemodule;
+private double moyennemodule;
 private ArrayList<ElementResponse> element;
-public NoteResponse(String modulename, long moyennemodule, ArrayList<ElementResponse> element) {
+public NoteResponse(String modulename, double moyennemodule, ArrayList<ElementResponse> element) {
 	super();
 	this.modulename = modulename;
 	this.moyennemodule = moyennemodule;
@@ -21,10 +21,10 @@ public String getModulename() {
 public void setModulename(String modulename) {
 	this.modulename = modulename;
 }
-public long getMoyennemodule() {
+public double getMoyennemodule() {
 	return moyennemodule;
 }
-public void setMoyennemodule(long moyennemodule) {
+public void setMoyennemodule(double moyennemodule) {
 	this.moyennemodule = moyennemodule;
 }
 public ArrayList<ElementResponse> getElement() {
