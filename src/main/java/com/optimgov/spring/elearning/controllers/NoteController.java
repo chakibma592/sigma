@@ -140,6 +140,7 @@ public class NoteController {
 		      }
 		      for(Note n : notes) {
 		    	  if(!modulename.equals(n.getElement().getModule().getModulename())) {
+		    		  if(nbrelement!=0)
 		    		  moyenne.add(new NoteResponse(modulename,notemodule/nbrelement,listelement) );
 		    		  modulename=n.getElement().getModule().getModulename();
 		    	  nbrelement=0;
