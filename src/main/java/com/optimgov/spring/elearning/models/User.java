@@ -35,7 +35,7 @@ public class User implements Serializable{
 	private Long id;
 
 	@NotBlank
-	@Size(max = 20)
+	@Size(max = 100)
 	private String username;
 	
 	@Size(max = 20)
@@ -88,7 +88,7 @@ public class User implements Serializable{
 		this.activate=false;
 		
 	}
-	public User(@NotBlank @Size(max = 20) String username, @Size(max = 20) String firstname,
+	public User(@NotBlank @Size(max = 100) String username, @Size(max = 20) String firstname,
 			@Size(max = 20) String lastname, @NotBlank @Size(max = 50) @Email String email,
 			@NotBlank @Size(max = 120) String password, Date birthday, boolean activate, Date created_at,
 			Set<Role> roles, Profession profession, StudiesLevel studieslevel, UploadedFile file) {
