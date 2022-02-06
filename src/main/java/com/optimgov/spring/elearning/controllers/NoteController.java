@@ -148,16 +148,11 @@ public class NoteController {
 		    	  nbrelement=0;
 		    	  notemodule=0;
 		    	  listelement= new ArrayList<ElementResponse>();
-		    	  nbrelement++;
-		    	  notemodule+=n.getNote();
-		    	  ElementResponse elemementrep=new ElementResponse(n.getElement().getElementname(), n.getNote());
-		    	  listelement.add(elemementrep);
-		    	  }else {
-		    	  nbrelement++;
-		    	  notemodule+=n.getNote();
-		    	  ElementResponse elemementrep=new ElementResponse(n.getElement().getElementname(), n.getNote());
-		    	  listelement.add(elemementrep);
 		    	  }
+		    	  nbrelement++;
+		    	  notemodule+=n.getNote();
+		    	  ElementResponse elemementrep=new ElementResponse(n.getElement().getElementname(), n.getNote());
+		    	  listelement.add(elemementrep);
 		      }
 		      return new ResponseEntity<>(moyenne, HttpStatus.OK);
 		    } catch (Exception e) {
